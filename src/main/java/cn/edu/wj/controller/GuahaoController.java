@@ -18,7 +18,11 @@ import cn.edu.wj.model.GPatientRegistration;
 import cn.edu.wj.model.GPayRecord;
 import cn.edu.wj.service.GPatientRegistrationService;
 import cn.edu.wj.service.GPayRecordService;
-
+/**
+ * 刘远荣傻狗
+ * @author lowke
+ *
+ */
 @Controller
 public class GuahaoController {
 	@Autowired
