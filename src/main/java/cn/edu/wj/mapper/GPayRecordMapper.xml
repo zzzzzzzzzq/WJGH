@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.wj.mapper.GPayRecordMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.wj.model.GPayRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pay_no" jdbcType="INTEGER" property="payNo" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="pay_money" jdbcType="INTEGER" property="payMoney" />
+    <result column="pay_way" jdbcType="VARCHAR" property="payWay" />
+    <result column="pay_time" jdbcType="INTEGER" property="payTime" />
+    <result column="is_pay" jdbcType="BIT" property="isPay" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pay_no, doctor, pay_type, pay_money, pay_way, pay_time, is_pay
+  </sql>
+  <insert id="insertSQL" parameterType="cn.edu.wj.model.GPayRecord"  >
+      insert into g_pay_record (pay_no, pay_type, pay_money, is_pay)
+    values (#{payNo,jdbcType=INTEGER}, #{payType,jdbcType=VARCHAR}, #{payMoney,jdbcType=INTEGER}, 
+      #{isPay,jdbcType=BIT})
+       
+  </insert>
+  
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.wj.mapper.GNodeMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.wj.model.GNode">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="sort_id" jdbcType="INTEGER" property="sortId" />
+    <result column="is_show" jdbcType="BIT" property="isShow" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pid, name, url, sort_id, is_show
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_node
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from g_node
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.wj.model.GNode">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_node (pid, name, url, 
+      sort_id, is_show)
+    values (#{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{sortId,jdbcType=INTEGER}, #{isShow,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.wj.model.GNode">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_node
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="sortId != null">
+        sort_id,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sortId != null">
+        #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.wj.model.GNode">
+    update g_node
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sortId != null">
+        sort_id = #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.wj.model.GNode">
+    update g_node
+    set pid = #{pid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      sort_id = #{sortId,jdbcType=INTEGER},
+      is_show = #{isShow,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll"  parameterType="java.lang.Integer" resultType="java.util.Map">
+	select 
+    g_node.id, g_node.pid, g_node.name, g_node.url, g_node.sort_id,
+     g_node.is_show,g_role_node.role_id
+    from g_node
+    left join g_role_node on g_node.id=g_role_node.node_id
+    where g_node.pid = 0 and g_node.is_show=1 and g_role_node.role_id=#{roleId,jdbcType=INTEGER}
+    order by g_node.sort_id
+  </select>
+  <select id="selectchildren" parameterType="java.lang.Integer" resultType="java.util.Map">
+	select 
+    g_node.id, g_node.pid, g_node.name, g_node.url, 
+		g_node.sort_id, g_node.is_show,g_role_node.role_id
+    from g_node
+    left join g_role_node on g_node.id=g_role_node.node_id
+    where g_node.pid =#{pid,jdbcType=INTEGER} and g_node.is_show=1 and g_role_node.role_id=#{roleId,jdbcType=INTEGER}
+    order by g_node.sort_id
+  </select>
+</mapper>

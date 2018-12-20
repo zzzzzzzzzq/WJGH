@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.wj.mapper.GAdminMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.wj.model.GAdmin">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+    <result column="login_pass" jdbcType="VARCHAR" property="loginPass" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="add_time" jdbcType="INTEGER" property="addTime" />
+    <result column="last_login_time" jdbcType="INTEGER" property="lastLoginTime" />
+    <result column="is_disabled" jdbcType="BIT" property="isDisabled" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, login_name, login_pass, nickname, email, add_time, last_login_time, is_disabled
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from g_admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.wj.model.GAdmin">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_admin (login_name, login_pass, nickname, 
+      email, add_time, last_login_time, 
+      is_disabled)
+    values (#{loginName,jdbcType=VARCHAR}, #{loginPass,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{addTime,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=INTEGER}, 
+      #{isDisabled,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.wj.model.GAdmin">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loginName != null">
+        login_name,
+      </if>
+      <if test="loginPass != null">
+        login_pass,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="isDisabled != null">
+        is_disabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPass != null">
+        #{loginPass,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=INTEGER},
+      </if>
+      <if test="isDisabled != null">
+        #{isDisabled,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.wj.model.GAdmin">
+    update g_admin
+    <set>
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPass != null">
+        login_pass = #{loginPass,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=INTEGER},
+      </if>
+      <if test="isDisabled != null">
+        is_disabled = #{isDisabled,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.wj.model.GAdmin">
+    update g_admin
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      login_pass = #{loginPass,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=INTEGER},
+      is_disabled = #{isDisabled,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findGAdmin" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_admin
+  </select>
+  <select id="selectPage" resultType="Map">
+	SELECT id,login_name,login_pass,nickname 
+	FROM g_admin 
+	limit #{m},#{n}
+	</select>
+  
+  <insert id="insertSQL" parameterType="cn.edu.wj.model.GAdmin"  >
+      insert into g_admin (login_name, login_pass, nickname, 
+      email, add_time, last_login_time, 
+      is_disabled)
+    values (#{loginName,jdbcType=VARCHAR}, #{loginPass,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{addTime,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=INTEGER}, 
+      #{isDisabled,jdbcType=BIT})
+       
+  </insert>
+  <select id="checkLogin" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_admin 
+    where login_name = #{loginName,jdbcType=VARCHAR}
+    	and login_pass = #{loginPass,jdbcType=VARCHAR}
+  </select>
+  <select id="findByLoginName" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_admin
+    where login_name =  #{loginName,jdbcType=VARCHAR}
+  </select>
+  <select id="ifDisable" resultType="boolean">
+    select is_disabled
+    from g_admin 
+    where login_name = #{loginName,jdbcType=VARCHAR}
+  </select>
+  <select id="findId" resultType="java.lang.Integer">
+    select id
+    from g_admin
+    where login_name = #{loginName,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title></title>
+		<script src="js/jquery.js"></script>
+		<script src="layer/layer.js"></script>
+		<style type="text/css">
+			body{
+				background-image: url(img/registration.jpg);
+				background-size: 1200px 690px;
+			}
+			a{
+				text-decoration: none;
+				color: black;
+			}
+			#item1{
+				width: 500px;
+				height: auto;
+     			margin-top: 180px;
+     			margin-left: 550px;
+			}
+			#item1 p{
+				font-size: 25px;
+				font-family: "微软雅黑";
+			}
+			.section{
+				width:200px;
+				height: 150px;
+				display:inline-block;
+				border: 1px solid gainsboro;
+				text-align: center;
+				line-height: 150px;
+				margin-bottom: 20px;
+				margin-right: 20px;
+			}
+			.section:hover{
+				font-size: 20px;
+			}
+		</style>
+		<script>
+			$(document).ready(function(){
+				$("#choices_nei").click(function(){
+					
+					layer.open({
+						type: 2,
+						title:['请选择就诊医生：','font-size:18px;'],
+					    area: ['390px', 'auto'],
+					    shadeClose: true, //点击遮罩关闭
+					    content: '/choice_doctor'
+					});
+					
+				});
+				
+				$("#choices_wai").click(function(){
+					
+					layer.open({
+						type: 2,
+						title:['请选择就诊医生：','font-size:18px;'],
+					    area: ['390px', 'auto'],
+					    shadeClose: true, //点击遮罩关闭
+					    content: '/choice_doctor'
+					});
+					
+				});
+				
+				$("#choices_zhong").click(function(){
+					
+					layer.open({
+						type: 2,
+						title:['请选择就诊医生：','font-size:18px;'],
+					    area: ['390px', 'auto'],
+					    shadeClose: true, //点击遮罩关闭
+					    content: '/choice_doctor'
+					});
+					
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="item1">
+			<p>请选择科室：</p>
+			<a id="choices_wai" href="#"><div class="section">普通外科</div></a>
+			<a id="choices_nei" href="#"><div class="section">普通内科</div></a>
+			<a id="choices_zhong" href="#"><div class="section">特色中医科</div></a>
+		</div>
+	</body>
+</html>

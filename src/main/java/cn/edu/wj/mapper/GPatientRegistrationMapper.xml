@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.wj.mapper.GPatientRegistrationMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.wj.model.GPatientRegistration">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="patient_identityid" jdbcType="VARCHAR" property="patientIdentityid" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
+    <result column="is_completed" jdbcType="BIT" property="isCompleted" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+    <result column="pay_no" jdbcType="INTEGER" property="payNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, patient_identityid, department, doctor, is_completed, time, pay_no
+  </sql>
+  <insert id="insertSQL" parameterType="cn.edu.wj.model.GPatientRegistration"  >
+      insert into g_patient_registration (patient_identityid, department, doctor, 
+      is_completed, time, pay_no)
+    values (#{patientIdentityid,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{doctor,jdbcType=VARCHAR}, 
+      #{isCompleted,jdbcType=BIT}, #{time,jdbcType=INTEGER}, #{payNo,jdbcType=INTEGER})
+       
+  </insert>
+  
+</mapper>

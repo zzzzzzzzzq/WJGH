@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Test</title>
+	</meta>
+</head>
+<body>
+	hello b
+	<table>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>用户名</th>
+            </tr>
+            <tr th:each="gad:${SimpleUser}">
+                <td th:text="${gad.id}"></td>
+                <td th:text="${gad.loginName}"></td>
+                <td th:text="${gad.isDisabled}"></td>
+                <td th:text="未付费"
+                	th:if="${gad.isDisabled}==false"></td>
+                <td th:text="已付费"
+                	th:if="${gad.isDisabled}==true"></td>
+            </tr>
+        </thead>
+	</table>
+	<p>1234</p>
+	<form method="post" action="/add_gad">
+		loginName:<input type="text" name="loginName"/><br/>
+		loginPass:<input type="text" name="loginPass"/><br/>
+		nickname:<input type="text" name="nickname"/><br/>
+		email:<input type="text" name="email"/><br/>
+		addTime:<input type="text" name="addTime"/><br/>
+		lastLoginTime:<input type="text" name="lastLoginTime"/>
+		<button>立即提交</button>
+	</form>
+	<br/>
+	<br/>
+	<form method = "post" action = "/findByLoginName">
+		loginName:<input type="text" name="loginName"/><br/>
+		<button>立即提交</button>
+	</form>
+	
+	
+</body>
+</html>

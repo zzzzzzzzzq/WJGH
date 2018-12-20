@@ -1,0 +1,86 @@
+body{
+				background-image: url(../img/piaoju.jpg);
+				background-size: 1200px 690px;
+			}
+			a{
+				text-decoration: none;
+				color: black;
+			}
+			p{
+				margin: 0px;
+				font-size: 20px;
+				font-family: "微软雅黑";
+			}
+			hr{
+				margin: 0px;
+				margin-top: 8px;
+			}
+			.layui-btn{
+				margin-top: 2px;
+				margin-left: 330px;
+			}
+			#fee{
+				width: 850px;
+				height: 512px;
+				margin-top: 130px;
+				margin-left: 165px;
+				border-radius: 0px 0px 15px 15px;
+				border: 2px solid #F0F0F0;
+				background-color: white;
+			}
+			.fee_img{
+				width: 100%;
+				height: 80px;
+				text-align: center;
+			}
+			.fee_img img{
+				width: 400px;
+				height: 80px;
+			}
+			#fee_con{
+				position: relative;
+				width: 100%;
+				height: 362px;
+				border: 1px solid #F26ECC;
+			}
+			.fee_title{
+				width: 100%;
+				height: 40px;
+				border-top: 1px solid #F26ECC;
+				border-bottom: 1px solid #F26ECC;
+			}
+			.fee_title div{
+				display: inline-block;
+				width: 200px;
+				height: 40px;
+				line-height: 40px;
+			}
+			.con{
+				text-align: center;
+			}
+			th{
+				border-style: solid;
+	            border-top-width: 1px;
+	            border-right-width: 0.1px;
+	            border-bottom-width: 1px;
+	            border-left-width: 0.5px;
+				border-color: #F26ECC;
+			}
+			.fee_bottom{
+				position: absolute;
+				width: 100%;
+				height: 100px;
+				bottom: 0px;
+				/*background-color: red;*/
+			}
+			.fee_bottom span{
+				margin-left: 530px;
+				font-size: 18px;
+			}
+			.fee_name{
+				display: inline-block;
+			}
+			.fee_time{
+				display: inline-block;
+				margin-left: 530px;
+			}

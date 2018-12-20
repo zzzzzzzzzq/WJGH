@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="css/nav.css"/>
+        <link rel="stylesheet" type="text/css" href="fonts/iconfont.css"/>
+		<script src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/nav.js"></script>
+		<script>
+		$(function(){
+				//给li加鼠标单击事件
+				$(".nav ul li").click(function(){
+	//			让当前被点击的li背景变颜色,兄弟元素不变颜色
+				$(this).css({'background-color':'#F8F8F8'}).siblings('li').css({'background-color':'#F8F8F8'});
+				})
+				
+				$('a[data-toggle="tab"]').click(function(){
+					var activeTab = $(this).text();
+					$(".active-tab span").html(activeTab);
+				})	
+		})	
+		
+		</script>
+	</head>
+	<body>
+		
+		<!--顶部-->
+		<div id="hos_name">
+			<div class="hos_name_img"><img src="../img/WJ_logo.jpg"/></div>
+			<div class="hos_name">万军门诊挂号收费系统</div>
+		</div>
+	
+		<!--左侧导航栏-->
+		<p class="active-tab"><strong>当前页面</strong>&nbsp;><span style="color: black;font-size: 28px;"></span></p>
+		
+		<div class="nav">
+	        <ul id="myTab">
+	           		           	       
+	            <li class="nav-item" th:each="lml : ${leftMenuList}">
+	            	<a th:href="${lml.url}"  data-toggle="dropdown" target="iframe_a">
+	               <i class="iconfont icon-menzhenguahao"></i>
+	            	<span th:text="${lml.name}" >>父</span>
+	            	<div th:if="${lml.children == null}">
+	            	<i class="my-icon nav-more" ></i>
+	            	</div>
+	            	</a>
+	            	<ul>
+	            		<li th:each="lmlc: ${lml.children}">
+	                    	<a th:href="${lmlc.url}" data-toggle="tab" target = "iframe_a">
+	                    		<i class="iconfont_2 icon-yonghu"></i>
+	                    		<span th:text="${lmlc.name}" >子</span>
+	                    	</a>
+	                    </li>
+	            	</ul>
+	            </li>
+	            	            
+	            
+	        </ul>
+	        
+	    </div>
+	    
+	    <!--中间显示内容-->
+	    <div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="home">
+				<iframe src="/default" frameborder="0" width="1200px" height="670px" overflow="hidden" name="iframe_a"></iframe>
+			</div>
+		</div>
+		
+		<!--右侧成员信息展示-->
+		<div id="right_info">
+			<div class="icon">
+				<img src="../img/yisheng.png" />
+			</div>
+			<div class="person_info">
+				姓名：张浙权
+			</div>
+			<div class="person_info">
+				性别：男
+			</div>
+			<div class="person_info">
+				医种：外科
+			</div>
+			<div class="person_info">
+				联系方式：15858290381
+			</div>
+			
+		</div>
+		
+		<!--底部信息-->
+		<div id="bottom_info">
+			©2018&nbsp;杭电信工卫生院
+		</div>
+		
+	</body>
+
+
+</html>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.wj.mapper.GPatientInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.wj.model.GPatientInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+    <result column="patient_sex" jdbcType="VARCHAR" property="patientSex" />
+    <result column="patient_age" jdbcType="TINYINT" property="patientAge" />
+    <result column="patientcard_id" jdbcType="INTEGER" property="patientcardId" />
+    <result column="patient_identityid" jdbcType="VARCHAR" property="patientIdentityid" />
+    <result column="is_preference" jdbcType="BIT" property="isPreference" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, patient_name, patient_sex, patient_age, patientcard_id, patient_identityid, is_preference, 
+    time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_patient_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from g_patient_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.wj.model.GPatientInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_patient_info (patient_name, patient_sex, patient_age, 
+      patientcard_id, patient_identityid, is_preference, 
+      time)
+    values (#{patientName,jdbcType=VARCHAR}, #{patientSex,jdbcType=VARCHAR}, #{patientAge,jdbcType=TINYINT}, 
+      #{patientcardId,jdbcType=INTEGER}, #{patientIdentityid,jdbcType=VARCHAR}, #{isPreference,jdbcType=BIT}, 
+      #{time,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.wj.model.GPatientInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_patient_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="patientName != null">
+        patient_name,
+      </if>
+      <if test="patientSex != null">
+        patient_sex,
+      </if>
+      <if test="patientAge != null">
+        patient_age,
+      </if>
+      <if test="patientcardId != null">
+        patientcard_id,
+      </if>
+      <if test="patientIdentityid != null">
+        patient_identityid,
+      </if>
+      <if test="isPreference != null">
+        is_preference,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientSex != null">
+        #{patientSex,jdbcType=VARCHAR},
+      </if>
+      <if test="patientAge != null">
+        #{patientAge,jdbcType=TINYINT},
+      </if>
+      <if test="patientcardId != null">
+        #{patientcardId,jdbcType=INTEGER},
+      </if>
+      <if test="patientIdentityid != null">
+        #{patientIdentityid,jdbcType=VARCHAR},
+      </if>
+      <if test="isPreference != null">
+        #{isPreference,jdbcType=BIT},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.wj.model.GPatientInfo">
+    update g_patient_info
+    <set>
+      <if test="patientName != null">
+        patient_name = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientSex != null">
+        patient_sex = #{patientSex,jdbcType=VARCHAR},
+      </if>
+      <if test="patientAge != null">
+        patient_age = #{patientAge,jdbcType=TINYINT},
+      </if>
+      <if test="patientcardId != null">
+        patientcard_id = #{patientcardId,jdbcType=INTEGER},
+      </if>
+      <if test="patientIdentityid != null">
+        patient_identityid = #{patientIdentityid,jdbcType=VARCHAR},
+      </if>
+      <if test="isPreference != null">
+        is_preference = #{isPreference,jdbcType=BIT},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.wj.model.GPatientInfo">
+    update g_patient_info
+    set patient_name = #{patientName,jdbcType=VARCHAR},
+      patient_sex = #{patientSex,jdbcType=VARCHAR},
+      patient_age = #{patientAge,jdbcType=TINYINT},
+      patientcard_id = #{patientcardId,jdbcType=INTEGER},
+      patient_identityid = #{patientIdentityid,jdbcType=VARCHAR},
+      is_preference = #{isPreference,jdbcType=BIT},
+      time = #{time,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findPatient" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_patient_info
+    where patient_identityid =  #{patientIden,jdbcType=VARCHAR}
+  </select>
+</mapper>
