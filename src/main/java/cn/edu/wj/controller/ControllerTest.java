@@ -20,7 +20,11 @@ import cn.edu.wj.service.impl.GAdminServiceImpl;
 import cn.edu.wj.service.impl.GPatientServiceImpl;
 import cn.edu.wj.util.Fn;
 import cn.edu.wj.util.UIUtils;
-
+/**
+ * 梅总好
+ * @author zzzzzzzzq
+ *
+ */
 @Controller
 public class ControllerTest {
 	@Autowired
