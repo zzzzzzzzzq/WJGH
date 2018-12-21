@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>action_node.html</title>
+	<meta charset="UTF-8"/>
+<!-- 	<script th:src="@{/jquery-easyui-1.6.11/jquery.min.js}"></script>
+	<script th:src="@{/jquery-easyui-1.6.11/jquery.easyui.min.js}"></script>
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script src="jquery-easyui-1.6.11/jquery.min.js"></script>
+	<script src="jquery-easyui-1.6.11/jquery.easyui.min.js"></script>
+	<script src="js/jquery.min.js"></script> -->
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+  </head>
+ 
+  <body>
+	<h2>Fluid Panel</h2>
+	<p>This example shows how to set the width of Panel to a percentage of its parent container.</p>
+	<div style="margin:20px 0 10px 0;">
+	</div>
+	<div id="p" class="easyui-panel" title="Fluid Panel" style="width:100%;height:200px;padding:10px;">
+		<p>The panel has a width of 100%.</p>
+	</div>  
+  
+  
+<div class="jq-layout rel" data-options="fit:true">
+    <div data-options="region:'north',border:false" style="overflow: hidden;">
+        <div id="grid-toolbar" class="clearfix p5">
+			<a id="add" class="button button-action button-rounded button-small"><i class="fa fa-plus"></i>新增</a>
+			<a id="edit" class="button button-primary button-rounded button-small"><i class="fa fa-star"></i>编辑</a>
+			<a id="delete" class="button button-caution button-rounded button-small"><i class="fa fa-trash-o"></i>删除</a>
+        </div>
+    </div>
+    <div data-options="region:'center',border:false">
+		<table fit="true" title="节点列表" class="jq-treegrid" data-options="{
+			url:'${pageContext.request.contextPath}/admin/action_node',
+			idField:'id',
+			treeField:'name',
+			pagination: false,
+			method:'post',
+			columns: [[
+				{field:'id',checkbox:true},
+				{field:'name',title:'节点名称',width:200},
+				{field:'url',title:'url',width:100},
+				{field:'sort_id',title:'排序值',width:50},
+				{field:'is_show',title:'是否显示',width:60,formatter: status}
+			]]
+		}">
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+	function status(v, row, index) {
+		var val;
+		if (v == 0) {
+			val = '<font color="black">未启用</font>';
+		} else if (v == 1) {
+			val = '<font color="green">已启用</font>';
+		} else {
+			return v;
+		}
+		return val;
+	}
+	$("#add").click(function(){
+		App.popup('${pageContext.request.contextPath}/admin/action_node_add',"新增节点");
+	});
+	$("#edit,#delete").click(function(){
+		var row = $(".jq-treegrid").treegrid("getSelected");
+		if(row==null){
+			App.alert("请先选择一条记录","warning");
+		}else{
+			var eleId = $(this).attr("id");
+			if(eleId=="edit"){
+				App.popup('${pageContext.request.contextPath}/admin/action_node_edit?id='+row.id,"编辑节点");
+			}else if(eleId=="delete"){
+	            App.ajax('${pageContext.request.contextPath}/admin/action_node_delete?id='+row.id);
+			}
+		}
+	});
+</script>
+  </body>
+</html>
