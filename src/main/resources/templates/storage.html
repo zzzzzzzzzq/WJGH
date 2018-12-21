@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>药库</title>
+		<link rel="stylesheet" href="layui/css/layui.css" media="all"/>
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="layui/layui.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="demoTable">
+		  搜索药品：
+		  <div class="layui-inline">
+		    <input class="layui-input" name="id" id="demoReload" autocomplete="off"/>
+		  </div>
+		  <button class="layui-btn" data-type="reload">搜索</button>
+		</div>
+		<table id="demo" lay-filter="test"></table>
+	
+	<script>
+		layui.use('table', function(){
+		  var table = layui.table;
+		
+		  table.render({
+		     elem: '#demo'
+		    ,url:'/gadlist'
+		    ,id: 'idTest'
+		    ,limit:10
+		    ,request: {pageName: 'page' ,limitName: 'limit' } 
+		    ,cols: [[
+		   	 {type:'checkbox'}
+		      ,{field:'name', width:100, title: '药品名'}
+		      ,{field:'price', width:150, title: '价格'}
+		      ,{field:'repertory', width:100, title: '库存'}
+		      ,{field:'type', width:100, title: '类别'}
+		      ,{field:'function', width:100, title: '药效'}
+		      ,{field:'remark', width:100, title: '备注'}
+		    ]]
+		    ,page: true
+		     ,skin: 'line' //行边框风格
+			  ,even: true //开启隔行背景
+			  ,size: 'lg' //小尺寸的表格
+			  });
+			  
+		  	$("#select").on("click", function(){
+				var  name= $("#name").val();
+				var  phone= $("#phone").val();
+				var  no= $("#no").val();
+				var  id= $("#id").val();
+				var  school= $("#school").val();
+				var  grade= $("#grade").val();
+				var  classe= $("#classe").val();
+				var  sex= $("#sex").val();
+			 	table.reload('idTest', {
+			    url: '/select'
+			    ,where: {name:name,phone:phone,no:no,id:id,
+			    		school:school,grade:grade,classe:classe,sex:sex} 
+			  	});
+				layer.msg("搜索成功！");
+				
+				
+			});
+			var vid;
+			table.on('checkbox(test)', function(obj){
+			  console.log(obj.data.id); //选中行的相关数据
+			  vid=obj.data.id;
+			});
+			$("#start").on("click", function(){
+				if(vid==null){
+					layer.msg("请选择一条数据在操作！")
+				}else{
+				 	table.reload('idTest', {
+				    url: '/start'
+				    ,where: {id:vid} //设定异步数据接口的额外参数
+				  	});
+					layer.msg("启用成功！");
+				}
+				
+			});
+			$("#stop").on("click", function(){
+				if(vid==null){
+					layer.msg("请选择一条数据在操作！")
+				}else{
+					table.reload('idTest', {
+					  url: '/stop'
+					  ,where: {id:vid} //设定异步数据接口的额外参数
+					});
+					layer.msg('禁用成功！');
+				}
+			});
+		});
+
+
+	</script>
+
+	</body>
+</html>
