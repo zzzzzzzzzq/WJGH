@@ -47,7 +47,8 @@ public class AdminController {
 	@RequestMapping(value = { "action_node" })
 	public String actionNode(HttpServletRequest request,
 			HttpServletResponse response) {
-		if (request.getMethod().equals("POST")) {	
+		return "/action_node";
+		/*if (request.getMethod().equals("POST")) {	
 			if ("combo".equals(request.getParameter("ui"))) {
 				List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
 				Map<String, Object> node = new HashMap<String, Object>();
@@ -63,7 +64,7 @@ public class AdminController {
 			}
 		} else {
 			return "/action_node";
-		}
+		}*/
 	}
 	
 	@RequestMapping(value = { "action_node_add" })
