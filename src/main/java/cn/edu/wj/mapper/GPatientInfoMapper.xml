@@ -9,11 +9,9 @@
     <result column="patientcard_id" jdbcType="INTEGER" property="patientcardId" />
     <result column="patient_identityid" jdbcType="VARCHAR" property="patientIdentityid" />
     <result column="is_preference" jdbcType="BIT" property="isPreference" />
-    <result column="time" jdbcType="INTEGER" property="time" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, patient_name, patient_sex, patient_age, patientcard_id, patient_identityid, is_preference, 
-    time
+    id, patient_name, patient_sex, patient_age, patientcard_id, patient_identityid, is_preference
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -59,9 +57,6 @@
       </if>
       <if test="isPreference != null">
         is_preference,
-      </if>
-      <if test="time != null">
-        time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -123,7 +118,6 @@
       patientcard_id = #{patientcardId,jdbcType=INTEGER},
       patient_identityid = #{patientIdentityid,jdbcType=VARCHAR},
       is_preference = #{isPreference,jdbcType=BIT},
-      time = #{time,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="findPatient" resultMap="BaseResultMap">

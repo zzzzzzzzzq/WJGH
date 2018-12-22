@@ -3,6 +3,8 @@ package cn.edu.wj.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,14 +42,22 @@ public class IndexController {
 		String loginPass = request.getParameter("loginPass");
 		System.out.println(loginName);
 		System.out.println(loginPass);
-		boolean status = reqService.ifDisable(loginName);
-		System.out.println("用户状态为"+status);//false为未禁用，true为用户已禁用
-		if(status == false){
+		
 		GAdmin gad = new GAdmin();
 		gad.setLoginName(loginName);
 		gad.setLoginPass(loginPass);
 		List<GAdmin> result = reqService.checkLogin(gad);
 		System.out.println("用户信息返回结果为"+result);
+		if(result.isEmpty()){
+			m.addAttribute("flag", 0);
+			return "/login";
+		}
+		boolean status = reqService.ifDisable(loginName);
+		System.out.println("用户状态为"+status);//false为未禁用，true为用户已禁用
+		if(status == true){
+		m.addAttribute("flag",3);//flag为3为用户状态异常
+		return "/login";
+		}
 		int userId = reqService.findId(loginName);//获取UserID
 		System.out.println("userid =" + userId);
 		Integer roleId = roleService.findRoleId(userId);//获取roleId
@@ -55,17 +65,9 @@ public class IndexController {
 		request.getSession().setAttribute("roleId",roleId);//将Roid存入网页缓存
 		
 		m.addAttribute("leftMenuList",gNodeService.getLeftNodeList(roleId));
-//		m.addAttribute("GAdmin",GAdmin);
-		if(result != null){
-			return "/main";
-		}else{
-			m.addAttribute("flag",0);
-			return "/login";
-		}
-	}else{
-		m.addAttribute("flag",3);//flag为3为用户状态异常
-		return "/login";
-	}
+		
+		return "/main";
+		
     }
 	@RequestMapping(value="/patientLogin",method = {RequestMethod.POST})
 	public String Patlogin(Model m,HttpServletRequest request) throws Exception{ 
@@ -73,8 +75,18 @@ public class IndexController {
 		System.out.println(patientIden);
 		List<GPatientInfo> GPatientInfo = gPatientService.patientLogin(patientIden);
 		System.out.println("返回结果为"+GPatientInfo);
-		int roleId = 5;
+		if(GPatientInfo.isEmpty()){
+			m.addAttribute("flag",3);//flag为3为用户状态异常
+			return "/login";
+		}
+		int roleId = 6;
 		m.addAttribute("leftMenuList",gNodeService.getLeftNodeList(roleId));
 		return "/main";
     }
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request,
+			HttpServletResponse response,HttpSession session)throws Exception{
+		session.invalidate();
+		return "redirect:login";
+	}
 }

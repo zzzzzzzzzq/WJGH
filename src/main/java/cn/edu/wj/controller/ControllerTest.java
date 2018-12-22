@@ -75,10 +75,10 @@ public class ControllerTest {
 	
 	@RequestMapping("/gad_info")//原本是index
     public String test(Model m) throws Exception{ 
-		List<GAdmin> GAdmin = reqService.findGAdmin();
-		System.out.println(GAdmin);
-		m.addAttribute("GAdmin",GAdmin);
-		System.out.println("123");
+//		List<GAdmin> GAdmin = reqService.findGAdmin();
+//		System.out.println(GAdmin);
+//		m.addAttribute("GAdmin",GAdmin);
+//		System.out.println("123");
         return "/gad_info";
     }
 	
