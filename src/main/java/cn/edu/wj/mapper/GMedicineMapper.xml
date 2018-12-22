@@ -127,4 +127,15 @@
     <include refid="Base_Column_List" />
     from g_medicine
   </select>
+  <select id="selectPage" resultType="Map">
+	SELECT 
+	<include refid="Base_Column_List" />
+	FROM g_medicine 
+	limit #{m},#{n}
+	</select>
+	
+	<delete id="delMedicine" parameterType="java.lang.Integer">
+    delete from g_medicine
+    where id = #{mid,jdbcType=INTEGER}
+  </delete>
 </mapper>

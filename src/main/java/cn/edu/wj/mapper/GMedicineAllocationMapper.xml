@@ -126,4 +126,33 @@
       pay_no = #{payNo,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findUnfinishMedicine" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_medicine_allocation
+    where is_completed = #{ifFinish,jdbcType=INTEGER}
+  </select>
+  <select id="selectPageAllocation" resultType="Map">
+	SELECT 
+	<include refid="Base_Column_List" />
+	FROM g_medicine_allocation
+	where is_completed = #{i,jdbcType=INTEGER}
+    and pay_no = #{p,jdbcType=INTEGER}
+	limit #{m},#{n}
+	</select>
+	<select id="findPayMedicine" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_medicine_allocation
+    where is_completed = #{i,jdbcType=INTEGER}
+    and pay_no = #{p,jdbcType=INTEGER}
+    
+  </select>
+  <update id="finishMedicine" parameterType="cn.edu.wj.model.GMedicineAllocation">
+    update g_medicine_allocation
+      set	medicine_doctor = #{medicineDoctor,jdbcType=VARCHAR},
+      is_completed = #{isCompleted,jdbcType=BIT},
+      check_date = #{checkDate,jdbcType=INTEGER}
+    where pay_no = #{payNo,jdbcType=INTEGER}
+  </update>
 </mapper>

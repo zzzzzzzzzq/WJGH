@@ -14,8 +14,12 @@
 		    <input class="layui-input" name="id" id="demoReload" autocomplete="off"/>
 		  </div>
 		  <button class="layui-btn" data-type="reload">搜索</button>
-		</div>
+		<button id = "add" class="layui-btn" >添加药品</button></div>
 		<table id="demo" lay-filter="test"></table>
+	
+	<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 	
 	<script>
 		layui.use('table', function(){
@@ -23,18 +27,20 @@
 		
 		  table.render({
 		     elem: '#demo'
-		    ,url:'/gadlist'
+		    ,url:'/storage'
 		    ,id: 'idTest'
 		    ,limit:10
 		    ,request: {pageName: 'page' ,limitName: 'limit' } 
 		    ,cols: [[
 		   	 {type:'checkbox'}
+		   	  ,{field:'id', width:50, title: 'ID'}
 		      ,{field:'name', width:100, title: '药品名'}
 		      ,{field:'price', width:150, title: '价格'}
 		      ,{field:'repertory', width:100, title: '库存'}
 		      ,{field:'type', width:100, title: '类别'}
 		      ,{field:'function', width:100, title: '药效'}
 		      ,{field:'remark', width:100, title: '备注'}
+		      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
 		    ]]
 		    ,page: true
 		     ,skin: 'line' //行边框风格
@@ -88,10 +94,87 @@
 					layer.msg('禁用成功！');
 				}
 			});
+			//监听行工具事件
+  table.on('tool(test)', function(obj){
+    var data = obj.data;
+    //console.log(obj)
+    if(obj.event === 'del'){
+      layer.confirm('真的删除行么', function(index){
+        obj.del();
+        layer.close(index);
+         alert(data.id); 
+        $.post('delMedicine',{id:data.id},function(result){
+					if (result.success){
+						$('#dg').datagrid('reload');	// reload the user data
+					} else {
+						$.messager.show({	// show error message
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					}
+				},'json');
+      });
+    } else if(obj.event === 'edit'){
+      layer.prompt({
+        formType: 2
+        ,value: data.email
+      }, function(value, index){
+        obj.update({
+          email: value
+        });
+        layer.close(index);
+      });
+    }
+  });
 		});
-
-
 	</script>
-
+	<script>//增加药品
+		$("#add").on('click',function(){
+/* alert("123"); */
+  	layer.open({
+  title: '增加药品',
+  type:2,
+  area:['280px','400px'],
+  content: "/form"
+	});  
+});    
+	</script>
+	
+	
 	</body>
+	<script>
+	$("#check").on('click',function(){
+layui.use('table', function(){
+  var table = layui.table;
+  //监听表格复选框选择
+  table.on('checkbox(demo)', function(obj){
+    console.log(obj)
+  });
+  //监听工具条
+
+  
+  var $ = layui.$, active = {
+    getCheckData: function(){ //获取选中数据
+      var checkStatus = table.checkStatus('idTest')
+      ,data = checkStatus.data;
+      layer.alert(JSON.stringify(data));
+    }
+    ,getCheckLength: function(){ //获取选中数目
+      var checkStatus = table.checkStatus('idTest')
+      ,data = checkStatus.data;
+      layer.msg('选中了：'+ data.length + ' 个');
+    }
+    ,isAll: function(){ //验证是否全选
+      var checkStatus = table.checkStatus('idTest');
+      layer.msg(checkStatus.isAll ? '全选': '未全选')
+    }
+  };
+  
+  $('.demoTable .layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+});
+});
+</script>
 </html>
