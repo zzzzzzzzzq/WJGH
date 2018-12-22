@@ -11,9 +11,9 @@
 		<div class="demoTable">
 		  搜索药品：
 		  <div class="layui-inline">
-		    <input class="layui-input" name="id" id="demoReload" autocomplete="off"/>
+		    <input class="layui-input" name="id" id="selectm" autocomplete="off"/>
 		  </div>
-		  <button class="layui-btn" data-type="reload">搜索</button>
+		  <button class="layui-btn" data-type="reload"  id = "select">搜索</button>
 		<button id = "add" class="layui-btn" >添加药品</button></div>
 		<table id="demo" lay-filter="test"></table>
 	
@@ -49,18 +49,15 @@
 			  });
 			  
 		  	$("#select").on("click", function(){
-				var  name= $("#name").val();
-				var  phone= $("#phone").val();
-				var  no= $("#no").val();
-				var  id= $("#id").val();
-				var  school= $("#school").val();
-				var  grade= $("#grade").val();
-				var  classe= $("#classe").val();
-				var  sex= $("#sex").val();
+				var  name= $("#selectm").val();
+				alert(name); 
 			 	table.reload('idTest', {
-			    url: '/select'
-			    ,where: {name:name,phone:phone,no:no,id:id,
-			    		school:school,grade:grade,classe:classe,sex:sex} 
+			    url: '/selectMname'
+			    ,where: {
+			    key: {
+                    name: $("#selectm").val()
+                  }
+			    } 
 			  	});
 				layer.msg("搜索成功！");
 				

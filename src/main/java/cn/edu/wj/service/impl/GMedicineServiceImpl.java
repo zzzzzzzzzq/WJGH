@@ -58,13 +58,13 @@ public class GMedicineServiceImpl implements GMedicineService{
 		int n=limit;
 		int ifFinish = 0;
 		List<GMedicineAllocation> list =GMedicineAllocationMapper.findUnfinishMedicine(ifFinish);
-//		List<GMedicineAllocation> list2 =GMedicineAllocationMapper.selectPageAllocation(m,n);
+		List<GMedicineAllocation> list2 =GMedicineAllocationMapper.selectAllocation(m,n);
 		int count=list.size();
-//		int count2=list2.size();
-//		System.out.println(count2+"!!");
+		int count2=list2.size();
+		System.out.println(count2+"!!");
 		System.out.println(list);
 		System.out.println(count);
-		return UIUtils.getGridData(count, list);
+		return UIUtils.getGridData(count, list2);
 	}
 
 	public Object getUIGridDataSelectMedicine(int page, int limit, Map<String, String> pageParams,int payno) {
@@ -87,6 +87,20 @@ public class GMedicineServiceImpl implements GMedicineService{
 	public int finishMedicine(GMedicineAllocation record) {
 		// TODO Auto-generated method stub
 		return GMedicineAllocationMapper.finishMedicine(record);
+	}
+
+	public Object getUIGridDatafindMedicine(int page, int limit, Map<String, String> pageParams, String mName) {
+		// TODO Auto-generated method stub
+		int m=(page-1)*limit;
+		int n=limit;
+		List<GMedicine> list =GMedicineMapper.findMedicinebyName(mName);
+		List<GMedicine> list2 =GMedicineMapper.selectPagebyName(m,n,mName);
+		int count=list.size();
+		int count2=list2.size();
+		System.out.println(count2+"!!");
+		System.out.println(list);
+		System.out.println(count);
+		return UIUtils.getGridData(count, list2);
 	}
 	
 }

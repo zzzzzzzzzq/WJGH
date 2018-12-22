@@ -87,6 +87,16 @@ public class MedicineController {
 		System.out.println(result);
 		return "1";
     }
+	@RequestMapping("/selectMname")
+    public String selectMname(HttpServletRequest request, HttpServletResponse response,int page,int limit) throws Exception{ 
+//		List<GAdmin> GAdmin = reqService.findGAdmin();
+//		System.out.println(GAdmin);
+//		m.addAttribute("GAdmin",GAdmin);
+		System.out.println("SELECT!!!!!");
+		String mName = request.getParameter("key[name]");
+		System.out.println("药名"+mName+"!!!!!!!!!!!!!!!");
+        return Fn.ajaxReturn(response,gMedicineServiceImpl.getUIGridDatafindMedicine(page,limit,UIUtils.getPageParams(request),mName));
+    }
 	/////////////////////////////////////////////////////以下为药品销售的方法
 	@RequestMapping("/saleMedicine")//原本是index
     public String saleMedicine(Model m) throws Exception{ 
@@ -110,7 +120,7 @@ public class MedicineController {
 		
     }
 	
-	@RequestMapping("/selectPayno")//原本是index
+	@RequestMapping("/selectPayno")
     public String selectPayno(HttpServletRequest request, HttpServletResponse response,int page,int limit) throws Exception{ 
 //		List<GAdmin> GAdmin = reqService.findGAdmin();
 //		System.out.println(GAdmin);

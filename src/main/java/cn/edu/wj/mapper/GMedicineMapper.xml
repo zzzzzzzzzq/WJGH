@@ -138,4 +138,17 @@
     delete from g_medicine
     where id = #{mid,jdbcType=INTEGER}
   </delete>
+  <select id="findMedicinebyName" resultType="Map">
+	SELECT 
+	<include refid="Base_Column_List" />
+	FROM g_medicine 
+	where name LIKE CONCAT(CONCAT('%', #{mN,jdbcType=VARCHAR}), '%')
+	</select>
+	<select id="selectPagebyName" resultType="Map">
+	SELECT 
+	<include refid="Base_Column_List" />
+	FROM g_medicine 
+	where name LIKE CONCAT(CONCAT('%', #{mN,jdbcType=VARCHAR}), '%')
+	limit #{m},#{n}
+	</select>
 </mapper>
