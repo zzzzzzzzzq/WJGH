@@ -77,7 +77,7 @@ public class GuahaoController {
 		gpa.setIsCompleted(isCompleted);
 		gpa.setTime(time);
 		gpa.setPayNo(payNo);
-		int result =gpaService.insert(gpa);
+		int result = gpaService.insert(gpa);
 		
 		GPayRecord gpay = new GPayRecord();
 		gpay.setPayNo(payNo);

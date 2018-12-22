@@ -4,21 +4,21 @@ public class GPayRecord {
 
 	private Integer id;
 
-	 private Integer payNo;
+	private Integer payNo;
 
-	 private String doctor;
+	private String doctor;
 
-	 private String payType;
+	private String payType;
 
-	 private Integer payMoney;
+	private Integer payMoney;
 
-	 private String payWay;
+	private String payWay;
 
-	 private Integer payTime;
+	private Integer payTime;
 	 
-	 private Boolean isPay;
+	private Boolean isPay;
 	 
-	 private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	public Integer getId() {
 		return id;

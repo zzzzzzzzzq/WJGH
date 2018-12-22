@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.wj.mapper.GPatientHistoryMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.wj.model.GPatientHistory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="patient_identityid" jdbcType="VARCHAR" property="patientIdentityid" />
+    <result column="disease_title" jdbcType="VARCHAR" property="diseaseTitle" />
+    <result column="disease_content" jdbcType="VARCHAR" property="diseaseContent" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
+    <result column="is_completed" jdbcType="BIT" property="isCompleted" />
+    <result column="date" jdbcType="INTEGER" property="date" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, patient_identityid, disease_title, disease_content, doctor, is_completed, date
+  </sql>
+  <select id="findAllGPatientHistory" parameterType="cn.edu.wj.model.GPatientHistory" resultMap="BaseResultMap"  >
+  	<if test="_parameter!=null">
+  	select 
+  	<include refid="Base_Column_List" />
+    from g_patient_history 
+  	where patient_identityid = #{patientIdentityid,jdbcType=VARCHAR}
+  	</if>
+  </select>
+  <select id="selectPage" resultType="Map">
+  
+  	<if test="_parameter!=null">
+  		SELECT id, patient_identityid, disease_title, disease_content, doctor, is_completed, date
+  		FROM g_patient_history 
+  		where patient_identityid = #{patientIdentityid,jdbcType=VARCHAR}
+		limit #{m},#{n}
+	</if>
+	</select>
+  <select id="findGPatientHistory" parameterType="cn.edu.wj.model.GPatientHistory" resultMap="BaseResultMap"  >
+	  	select 
+	  	<include refid="Base_Column_List" />
+	    from g_patient_history 
+	    where patient_identityid = #{patientIdentityid,jdbcType=VARCHAR}
+	    and is_completed = "0"
+    
+  </select>
+  <update id="updateGPatientHistory" parameterType="cn.edu.wj.model.GPatientHistory">
+    update g_patient_history
+    set disease_title = #{diseaseTitle,jdbcType=VARCHAR},
+      disease_content = #{diseaseContent,jdbcType=VARCHAR}
+    where patient_identityid = #{patientIdentityid,jdbcType=VARCHAR} 
+    and is_completed = "0"
+  </update>
+  
+</mapper>

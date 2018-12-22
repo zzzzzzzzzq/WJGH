@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title></title>
+		<link rel="stylesheet" href="layui/css/layui.css"  media="all"/>
+		<link rel="stylesheet" href="css/visit.css" />
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    	<script src="layui/layui.js" charset="utf-8"></script>
+    	<style type="text/css">
+    	.layui-table-view select[lay-ignore]{
+    		display:none;
+    	}
+    	</style>
+	</head>
+	<body>
+		<form method="post" action="/start_visit">
+			<div class="layui-inline">
+		     	<label class="layui-form-label">病人身份证号</label>
+			    <div class="layui-input-inline">
+			        <input type="tel" name="patientcardId" lay-verify="required|phone" autocomplete="off" class="layui-input" placeholder="请插入ID卡"/>
+		        </div>
+		    </div>
+		    <button class="layui-btn" lay-submit="" lay-filter="demo1">开始就诊</button>
+		</form>
+		<a href="/visit"><button class="layui-btn layui-btn-danger finish">结束就诊</button></a>
+		<div id="con_left">
+			<div class="icon">
+				<img src="img/icon-user.png" />
+			</div>
+			<div class="pi">
+				<span>姓名：</span><br />
+				<span>性别：</span><br />
+				<span>年龄：</span><br />
+				<div class="pat_info" th:each="GPatientInfo:${gpi}">
+					<div th:text="${GPatientInfo.patientName}"></div>
+					<div class="pi_2" th:text="${GPatientInfo.patientSex}"></div>
+					<div class="pi_3" th:text="${GPatientInfo.patientAge}"></div>
+				</div>
+			</div>
+		</div>
+		<div id="con_right">
+			<table id="demo" lay-filter="test"></table>
+		</div>
+		<hr />
+		<div id="bottom_left">
+			<a th:href="@{'medicine_allocation/?patientIdentityid='+${pId}}">
+				<div class="peiyao">
+				配药
+				</div>
+			</a>
+			<a href="#">
+				<div class="jiancha">
+				常规性检查
+				</div>
+			</a>
+			
+		</div>
+		<form method="post" action="/update_disease">
+		<div id="bottom_right">
+			<div class="bcak_color">&nbsp;病情标题</div>
+			
+		    <input type="text" name="diseaseTitle" lay-verify="title" autocomplete="off" placeholder="请输入内容"  class="layui-input" th:each="GPatientHistory:${gph}" th:value="${GPatientHistory.diseaseTitle}"/>
+		   	<div class="bcak_color">&nbsp;病情内容</div>
+			<textarea placeholder="请输入内容" class="layui-textarea" name="diseaseContent" th:each="GPatientHistory:${gph}" th:text="${GPatientHistory.diseaseContent}"></textarea>
+			<t th:each="GPatientHistory:${gph}">
+				<input type="text" name="patientIdentityid" th:value="${GPatientHistory.patientIdentityid}" style="display:none;"/>
+				<button class="layui-btn check_info" lay-submit="" lay-filter="demo1">确认提交</button>
+			</t>
+		</div>
+		</form>
+		
+	<script th:inline="javascript">
+		layui.use('table', function(){
+		  var table = layui.table;
+		
+		  table.render({
+		     elem: '#demo'
+		    ,url:'/gphlist?patientIdentityid='+[[${pId}]]
+		    ,id: 'idTest'
+		    ,limit:5
+		    ,request: {pageName: 'page' ,limitName: 'limit' } 
+		    ,cols: [[
+		   	 {type:'checkbox'}
+		      ,{field:'patient_identityid', width:180, title: '身份证号'}
+		      ,{field:'disease_title', width:150, title: '病情标题'}
+		      ,{field:'disease_content', width:280, title: '具体病情'}
+		      ,{field:'doctor', width:100, title: '就诊医生'}
+		      ,{field:'is_completed', width:88, title: '就诊状态'}
+		    ]]
+		    ,page: true
+		     ,skin: 'line' //行边框风格
+			  ,even: true //开启隔行背景
+			  ,size: 'lg' //小尺寸的表格
+			});
+			
+			$("#select").on("click", function(){
+				var  name= $("#name").val();
+				var  phone= $("#phone").val();
+				var  no= $("#no").val();
+				var  id= $("#id").val();
+				var  school= $("#school").val();
+				var  grade= $("#grade").val();
+				var  classe= $("#classe").val();
+				var  sex= $("#sex").val();
+			 	table.reload('idTest', {
+			    url: '/select'
+			    ,where: {name:name,phone:phone,no:no,id:id,
+			    		school:school,grade:grade,classe:classe,sex:sex} 
+			  	});
+				layer.msg("搜索成功！");
+				
+				
+			});
+			var vid;
+			table.on('checkbox(test)', function(obj){
+			  console.log(obj.data.id); //选中行的相关数据
+			  vid=obj.data.id;
+			});
+			$("#start").on("click", function(){
+				if(vid==null){
+					layer.msg("请选择一条数据在操作！")
+				}else{
+				 	table.reload('idTest', {
+				    url: '/start'
+				    ,where: {id:vid} //设定异步数据接口的额外参数
+				  	});
+					layer.msg("启用成功！");
+				}
+				
+			});
+			$("#stop").on("click", function(){
+				if(vid==null){
+					layer.msg("请选择一条数据在操作！")
+				}else{
+					table.reload('idTest', {
+					  url: '/stop'
+					  ,where: {id:vid} //设定异步数据接口的额外参数
+					});
+					layer.msg('禁用成功！');
+				}
+			});
+		});
+
+
+	</script>
+	
+		
+	</body>
+</html>

@@ -132,4 +132,16 @@
     from g_patient_info
     where patient_identityid =  #{patientIden,jdbcType=VARCHAR}
   </select>
+  <select id="selectPatientIdentityid" resultType="string">
+    select 
+    patient_identityid 
+    from g_patient_info 
+    where patientcard_id =  #{patientcardId,jdbcType=INTEGER}
+  </select>
+  <select id="selectPatientInfo" resultMap="BaseResultMap">
+    select 
+    patient_name, patient_sex, patient_age
+    from g_patient_info
+    where patient_identityid =  #{patientIdentityid,jdbcType=VARCHAR}
+  </select>
 </mapper>
