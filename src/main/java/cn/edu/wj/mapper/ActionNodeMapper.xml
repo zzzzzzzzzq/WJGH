@@ -6,7 +6,6 @@
     <result column="pid" jdbcType="INTEGER" property="pid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="level" jdbcType="BIT" property="level" />
     <result column="sort_id" jdbcType="INTEGER" property="sortId" />
     <result column="is_show" jdbcType="BIT" property="isShow" />
   </resultMap>
@@ -39,8 +38,8 @@
   </select>
    <select id="selectNode" resultType="Map">
     select 
-   id, pid as _parentId, name, url, level, sort_id, is_show
-    from t_action_node
+   id, pid, name, url, sort_id, is_show
+    from g_node
     order by sort_id
   </select>
    <select id="selectBypid" resultType="Map">
@@ -52,8 +51,8 @@
   </select>
    <select id="selectBypid2" resultType="Map">
     select 
-    id,name as text,pid,level,sort_id
-    from t_action_node
+    id,name,pid,sort_id,url
+    from g_node
     where pid = #{pid,jdbcType=INTEGER}
     order by sort_id
   </select>

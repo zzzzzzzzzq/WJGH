@@ -50,9 +50,10 @@ public class ActionNodeService {
 		List<Row> list = sqlRunner.select(sql);*/
 		List<Map<String, Object>> list = mapper.selectBypid2(pid);
 		for (Map<String, Object> one : list) {
-			if (Integer.valueOf(one.get("level").toString()) < maxLevel) {
+			one.put("children",getNodeTree(Integer.parseInt(one.get("id").toString()),maxLevel));
+/*			if (Integer.valueOf(one.get("level").toString()) < maxLevel) {
 				one.put("children",getNodeTree(Integer.parseInt(one.get("id").toString()),maxLevel));
-			}
+			}*/
 		}
 		return list;
 	}

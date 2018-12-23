@@ -47,15 +47,15 @@ public class AdminController {
 	@RequestMapping(value = { "action_node" })
 	public String actionNode(HttpServletRequest request,
 			HttpServletResponse response) {
-		return "/action_node";
-		/*if (request.getMethod().equals("POST")) {	
-			if ("combo".equals(request.getParameter("ui"))) {
+		if (request.getMethod().equals("POST")) {	
+			if (true) {
 				List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
 				Map<String, Object> node = new HashMap<String, Object>();
 				node.put("id", 0);
 				node.put("text", "--顶级节点--");
 				res.add(node);
 				res.addAll(actionNodeService.getUIComboData());
+				System.out.println(res);
 				return Fn.ajaxReturn(response, res);
 			} else {
 				Map<String, Object> list= actionNodeService.getUIGridData();
@@ -64,7 +64,7 @@ public class AdminController {
 			}
 		} else {
 			return "/action_node";
-		}*/
+		}
 	}
 	
 	@RequestMapping(value = { "action_node_add" })
