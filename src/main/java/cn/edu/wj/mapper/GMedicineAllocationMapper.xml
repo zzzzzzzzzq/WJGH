@@ -148,6 +148,12 @@
     and pay_no = #{p,jdbcType=INTEGER}
     
   </select>
+  <select id="selectAllocation" resultType="Map">
+	SELECT 
+	<include refid="Base_Column_List" />
+	FROM g_medicine_allocation
+	limit #{m},#{n}
+	</select>
   <update id="finishMedicine" parameterType="cn.edu.wj.model.GMedicineAllocation">
     update g_medicine_allocation
       set	medicine_doctor = #{medicineDoctor,jdbcType=VARCHAR},

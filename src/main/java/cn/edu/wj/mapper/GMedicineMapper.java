@@ -29,5 +29,9 @@ public interface GMedicineMapper {
 	
 	int delMedicine(int mid);
 
+	List<GMedicine> findMedicinebyName(String mName);
+
+	List<GMedicine> selectPagebyName(@Param("m")int m,@Param("n")int n,@Param("mN") String mName);
+
 //	List<GMedicine> findUnfinishMedicine(int ifFinish);
 }
