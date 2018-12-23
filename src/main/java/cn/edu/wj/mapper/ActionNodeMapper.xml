@@ -44,8 +44,8 @@
   </select>
    <select id="selectBypid" resultType="Map">
     select 
-    id,name,pid,level
-    from t_action_node
+    id,name,pid
+    from g_node
     where pid = #{pid,jdbcType=INTEGER}
     order by sort_id
   </select>

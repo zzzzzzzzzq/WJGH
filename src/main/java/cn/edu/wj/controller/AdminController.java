@@ -3,6 +3,7 @@ package cn.edu.wj.controller;
 import java.util.ArrayList;
 
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ import cn.edu.wj.service.ActionNodeService;
 import cn.edu.wj.service.AdminService;
 import cn.edu.wj.service.RoleNodeService;
 import cn.edu.wj.util.Fn;
-import cn.edu.wj.util.UIUtils;
+import cn.edu.wj.util.zzqUIUtils;
 
 
 /**
@@ -113,9 +114,9 @@ public class AdminController {
 			return Fn.ajaxReturn(
 					response,
 					adminService.getUIGridData(where,
-							UIUtils.getPageParams(request)));
+							zzqUIUtils.getPageParams(request)));
 		} else {
-			return "admin/role";
+			return "role";
 		}
 	}
 	
@@ -130,7 +131,7 @@ public class AdminController {
 				return Fn.ajaxReturn(response, null, "发生错误，请重试！", 0);
 			}
 		} else {
-			return "admin/role_add";
+			return "role_add";
 		}
 	}
 	
@@ -147,7 +148,7 @@ public class AdminController {
 			}
 		} else {
 			model.addAttribute("role", adminService.findById(entity.getId()));
-			return "admin/role_edit";
+			return "role_edit";
 		}
 	}
 
@@ -178,7 +179,7 @@ public class AdminController {
 			model.addAttribute("node", node);
 			System.out.println("用户权限!:");
 			System.out.println(node);
-			return "admin/role_access";
+			return "role_access";
 		}
 	}
 

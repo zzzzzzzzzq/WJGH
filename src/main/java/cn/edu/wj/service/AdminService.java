@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import cn.edu.wj.mapper.RoleMapper;
 import cn.edu.wj.model.Role;
 import cn.edu.wj.util.UIUtils;
+import cn.edu.wj.util.zzqUIUtils;
 
 
 @Component
@@ -26,7 +27,7 @@ public class AdminService {
 		List<Role> list = rolemapper.selectAll();	
 		List<Role> list2=rolemapper.selectPage(m,n);
 		int count=list.size();
-		return UIUtils.getGridData(count, list);
+		return zzqUIUtils.getGridData(count, list);
 	}
 
 

@@ -14,7 +14,7 @@
 		<tr>
 			<td>父节点：</td>
 			<td>
-				<input class="jq-combotree" type="text" name="pid" value="${actionNode.pid}" url="$/admin/action_node?ui=combo" data-options="{
+				<input class="jq-combotree" type="text" name="pid" th:value="${actionNode.pid}" url="/admin/action_node?ui=combo" data-options="{
 						required:true,
 						method:'post',
 						valueField:'id'
@@ -24,30 +24,30 @@
 		<tr>
 			<td>节点名称：</td>
 			<td>
-				<input name="name" class="jq-validatebox" value="${actionNode.name}" type="text" data-options="required:true" />
+				<input name="name" class="jq-validatebox" th:value="${actionNode.name}" type="text" data-options="required:true" />
 			</td>
 		</tr>
 		<tr>
 			<td>url：</td>
 			<td>
-				<input name="url"  value="${actionNode.url}" type="text" />
+				<input name="url"  th:value="${actionNode.url}" type="text" />
 			</td>
 		</tr>
 		<tr>
 			<td>排序值：</td>
 			<td>
-				<input name="sortId" class="jq-validatebox" value="${actionNode.sortId}" type="text" data-options="required:true" validType="number" />
+				<input name="sortId" class="jq-validatebox" th:value="${actionNode.sortId}" type="text" data-options="required:true" validType="number" />
 			</td>
 		</tr>
 		<tr>
 			<td>是否显示：</td>
 			<td>
 				<label class="radio inline">
-				  <input type="radio" name="isShow" value="1" ${actionNode.isShow==true? "checked" : ""} />
+				  <input type="radio" name="isShow" value="1"/>
 				  是
 				</label>
 				<label class="radio inline">
-				  <input type="radio" name="isShow" value="0" ${actionNode.isShow==false? "checked" : ""} />
+				  <input type="radio" name="isShow" value="0"/>
 				  否
 				</label>
 			</td>

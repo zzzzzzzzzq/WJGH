@@ -55,7 +55,7 @@ public class RoleNodeService {
 					node.put("isCheck", true);
 				}
 			}
-			if (Integer.valueOf(formList.get(i).get("level").toString()) < maxLevel) {
+			if (true) {
 				node.put("children",getNode(Integer.valueOf(node.get("id").toString()),maxLevel, roleId));
 			}
 			res.add(node);

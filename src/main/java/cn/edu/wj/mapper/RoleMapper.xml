@@ -14,29 +14,29 @@
     <select id="selectAll"  resultType="Map">
     select 
     <include refid="Base_Column_List" />
-    from t_role
+    from g_role
   </select>
     <select id="selectPage"  resultType="Map">
     select 
     <include refid="Base_Column_List" />
-    from t_role
+    from g_role
     limit #{m},#{n}
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_role
+    from g_role
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_role
+    delete from g_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.edu.wj.model.Role">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_role (name, remark, level, 
+    insert into g_role (name, remark, level, 
       status)
     values (#{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER})
@@ -94,7 +94,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.edu.wj.model.Role">
-    update t_role
+    update g_role
     set name = #{name,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       level = #{level,jdbcType=INTEGER},
