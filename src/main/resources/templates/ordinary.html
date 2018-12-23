@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>药库</title>
+		<link rel="stylesheet" href="layui/css/layui.css" media="all"/>
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="layui/layui.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="demoTable">
+		  搜索检查：
+		  <div class="layui-inline">
+		    <input class="layui-input" name="id" id="slecetpayno" autocomplete="off"/>
+		  </div>
+		  <button class="layui-btn" data-type="reload"  id = "select">搜索</button>
+		<button id = "addodoctor" class="layui-btn" >确认检查</button></div>
+		<table id="demo" lay-filter="test"></table>
+	
+	<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+	
+	<script>
+		layui.use('table', function(){
+		  var table = layui.table;
+		
+		  table.render({
+		     elem: '#demo'
+		    ,url:'/AllOrdinary'
+		    ,id: 'idTest'
+		    ,limit:10
+		    ,request: {pageName: 'page' ,limitName: 'limit' } 
+		    ,cols: [[
+		   	 {type:'checkbox'}
+		   	  ,{field:'id', width:50, title: 'ID'}
+		      ,{field:'patientId', width:100, title: '病人id'}
+		      ,{field:'checkItem', width:150, title: '检查项目'}
+		      ,{field:'checkResult', width:100, title: '检查结果'}
+		      ,{field:'checkDoctor', width:100, title: '检查医生'}
+		      ,{field:'isCompleted', width:100, title: '是否完成'}
+		      ,{field:'checkDate', width:100, title: '检查时间'}
+		      ,{field:'payNo', width:100, title: '检查单号'}
+		      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+		    ]]
+		    ,page: true
+		     ,skin: 'line' //行边框风格
+			  ,even: true //开启隔行背景
+			  ,size: 'lg' //小尺寸的表格
+			  });
+			  
+		  	$("#select").on("click", function(){
+				var  Opayno= $("#slecetpayno").val();
+				 /* alert(Opayno);  */
+			 	table.reload('idTest', {
+			    url: '/selectOpayno'
+			    ,page: {
+                  curr: 1 //重新从第 1 页开始
+                }
+			    ,where: {
+			    key: {
+                    opayno: $("#slecetpayno").val()
+                  }
+                  } 
+			  	});
+				layer.msg("搜索成功！");
+				
+				
+			});
+			var vid;
+			table.on('checkbox(test)', function(obj){
+			  console.log(obj.data.id); //选中行的相关数据
+			  vid=obj.data.id;
+			});
+			$("#start").on("click", function(){
+				if(vid==null){
+					layer.msg("请选择一条数据在操作！")
+				}else{
+				 	table.reload('idTest', {
+				    url: '/start'
+				    ,where: {id:vid} //设定异步数据接口的额外参数
+				  	});
+					layer.msg("启用成功！");
+				}
+				
+			});
+			$("#stop").on("click", function(){
+				if(vid==null){
+					layer.msg("请选择一条数据在操作！")
+				}else{
+					table.reload('idTest', {
+					  url: '/stop'
+					  ,where: {id:vid} //设定异步数据接口的额外参数
+					});
+					layer.msg('禁用成功！');
+				}
+			});
+			//监听行工具事件
+  table.on('tool(test)', function(obj){
+    var data = obj.data;
+    //console.log(obj)
+    if(obj.event === 'del'){
+      layer.confirm('真的删除行么', function(index){
+        obj.del();
+        layer.close(index);
+         alert(data.id); 
+        $.post('delMedicine',{id:data.id},function(result){
+					if (result.success){
+						$('#dg').datagrid('reload');	// reload the user data
+					} else {
+						$.messager.show({	// show error message
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					}
+				},'json');
+      });
+    } else if(obj.event === 'edit'){
+      layer.prompt({
+        formType: 2
+        ,value: data.email
+      }, function(value, index){
+        obj.update({
+          email: value
+        });
+        layer.close(index);
+      });
+    }
+  });
+		});
+	</script>
+	<script>//增加检查医生
+		$("#addodoctor").on('click',function(){
+	alert("123"); 
+  	layer.open({
+  title: '检查确认',
+  type:2,
+  area:['280px','400px'],
+  content: "/addOdoctorform"
+	});  
+});    
+	</script>
+	
+	
+	</body>
+	<script>
+	$("#check").on('click',function(){
+layui.use('table', function(){
+  var table = layui.table;
+  //监听表格复选框选择
+  table.on('checkbox(demo)', function(obj){
+    console.log(obj)
+  });
+  //监听工具条
+
+  
+  var $ = layui.$, active = {
+    getCheckData: function(){ //获取选中数据
+      var checkStatus = table.checkStatus('idTest')
+      ,data = checkStatus.data;
+      layer.alert(JSON.stringify(data));
+    }
+    ,getCheckLength: function(){ //获取选中数目
+      var checkStatus = table.checkStatus('idTest')
+      ,data = checkStatus.data;
+      layer.msg('选中了：'+ data.length + ' 个');
+    }
+    ,isAll: function(){ //验证是否全选
+      var checkStatus = table.checkStatus('idTest');
+      layer.msg(checkStatus.isAll ? '全选': '未全选')
+    }
+  };
+  
+  $('.demoTable .layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+});
+});
+</script>
+</html>
