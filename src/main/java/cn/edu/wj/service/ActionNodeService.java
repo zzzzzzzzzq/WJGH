@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import cn.edu.wj.mapper.ActionNodeMapper;
 import cn.edu.wj.model.ActionNode;
 import cn.edu.wj.util.UIUtils;
+import cn.edu.wj.util.zzqUIUtils;
 
 
 @Component
@@ -36,7 +37,7 @@ public class ActionNodeService {
 	public Map<String, Object> getUIGridData() {
 		List<Map<String, Object>> list=mapper.selectNode();
 		int count=list.size();
-		return UIUtils.getGridData(count, list);
+		return zzqUIUtils.getGridData(count, list);
 	}
 
 	public List<Map<String, Object>> getUIComboData() {

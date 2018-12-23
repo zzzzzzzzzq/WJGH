@@ -48,7 +48,7 @@ public class AdminController {
 	public String actionNode(HttpServletRequest request,
 			HttpServletResponse response) {
 		if (request.getMethod().equals("POST")) {	
-			if (true) {
+			if ("combo".equals(request.getParameter("ui"))) {
 				List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
 				Map<String, Object> node = new HashMap<String, Object>();
 				node.put("id", 0);
@@ -74,7 +74,7 @@ public class AdminController {
 			actionNodeService.save(actionNode);
 			return Fn.ajaxReturn(response, null, "添加成功", 1);
 		} else {
-			return "admin/action_node_add";
+			return "action_node_add";
 		}
 	}
 
@@ -100,7 +100,7 @@ public class AdminController {
 		} else {
 			model.addAttribute("actionNode",
 					actionNodeService.findById(actionNode.getId()));
-			return "admin/action_node_edit";
+			return "action_node_edit";
 		}
 	}
 

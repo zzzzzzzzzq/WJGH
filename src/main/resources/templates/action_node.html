@@ -3,26 +3,30 @@
   <head>
     <title>action_node.html</title>
 	<meta charset="UTF-8"/>
-<!-- 	<script th:src="@{/jquery-easyui-1.6.11/jquery.min.js}"></script>
-	<script th:src="@{/jquery-easyui-1.6.11/jquery.easyui.min.js}"></script>
-	<script th:src="@{/js/jquery.js}"></script>
-	<script th:src="@{/js/bootstrap.js}"></script> -->
-	<link href="../ui/jqui.min.css" rel="stylesheet" type="text/css"/>
+  	<link href="../ui/jqui.min.css" rel="stylesheet" type="text/css"/>
 	<script src="../jquery-easyui-1.6.11/jquery.min.js"></script>
 	<script src="../jquery-easyui-1.6.11/jquery.easyui.min.js"></script>
 	<script src="../js/jquery.min.js"></script>
 	<script src="../bootstrap/js/bootstrap.min.js"></script>
-	<script src="../ui/jqui.min.js" type="text/javascript"></script>
-  </head>
- 
-  <body>
+	<link rel="stylesheet" href="../layui/css/layui.css" media="all"/>
 
+	
+	<script src="../mod/jquery/jquery.min.js" type="text/javascript"></script>
+	<script src="../admin/ui/jqui.min.js" type="text/javascript"></script>
+	<script src="../mod/jquery/jquery.hashchange.min.js" type="text/javascript"></script>
+	<script src="../admin/js/admin.min.js" type="text/javascript"></script>
+	<script src="../mod/fancybox/jquery.fancybox.min.js" type="text/javascript"></script>
+  </head>
+  <body>
 <div class="jq-layout rel" data-options="fit:true">
     <div data-options="region:'north',border:false" style="overflow: hidden;">
         <div id="grid-toolbar" class="clearfix p5">
-			<a id="add" class="button button-action button-rounded button-small"><i class="fa fa-plus"></i>新增</a>
+			<!-- <a id="add" class="button button-glow button-rounded button-raised button-primary">新增</a>
 			<a id="edit" class="button button-primary button-rounded button-small"><i class="fa fa-star"></i>编辑</a>
-			<a id="delete" class="button button-caution button-rounded button-small"><i class="fa fa-trash-o"></i>删除</a>
+			<a id="delete" class="button button-caution button-rounded button-small"><i class="fa fa-trash-o"></i>删除</a> -->
+   		    <a id="add" class="layui-btn layui-btn-normal">新增</a>
+		    <button id="edit" class="layui-btn layui-btn-warm">编辑</button>
+		    <button id="delete" class="layui-btn layui-btn-danger">删除</button>
         </div>
     </div>
     <div data-options="region:'center',border:false">
@@ -56,7 +60,7 @@
 		return val;
 	}
 	$("#add").click(function(){
-		App.popup('${pageContext.request.contextPath}/admin/action_node_add',"新增节点");
+		App.popup('/admin/action_node_add',"新增节点");
 	});
 	$("#edit,#delete").click(function(){
 		var row = $(".jq-treegrid").treegrid("getSelected");
@@ -65,12 +69,13 @@
 		}else{
 			var eleId = $(this).attr("id");
 			if(eleId=="edit"){
-				App.popup('${pageContext.request.contextPath}/admin/action_node_edit?id='+row.id,"编辑节点");
+				App.popup('/admin/action_node_edit?id='+row.id,"编辑节点");
 			}else if(eleId=="delete"){
-	            App.ajax('${pageContext.request.contextPath}/admin/action_node_delete?id='+row.id);
+	            App.ajax('/admin/action_node_delete?id='+row.id);
 			}
 		}
 	});
 </script>
   </body>
+
 </html>
