@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.wj.mapper.ActionNodeMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.wj.model.ActionNode">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="sort_id" jdbcType="INTEGER" property="sortId" />
+    <result column="is_show" jdbcType="BIT" property="isShow" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pid, name, url, sort_id, is_show
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_node
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll"  parameterType="java.lang.Integer" resultType="java.util.Map">
+	select 
+    t_action_node.id, t_action_node.pid, t_action_node.name, t_action_node.url, t_action_node.level,
+		t_action_node.sort_id, t_action_node.is_show,t_role_node.role_id
+    from t_action_node
+    left join t_role_node on t_action_node.id=t_role_node.node_id
+    where t_action_node.pid = 0 and t_action_node.is_show=1 and t_role_node.role_id=#{roleId,jdbcType=INTEGER}
+    order by t_action_node.sort_id
+  </select>
+  <select id="selectchildren" parameterType="java.lang.Integer" resultType="java.util.Map">
+	select 
+    t_action_node.id, t_action_node.pid, t_action_node.name, t_action_node.url, t_action_node.level,
+		t_action_node.sort_id, t_action_node.is_show,t_role_node.role_id
+    from t_action_node
+    left join t_role_node on t_action_node.id=t_role_node.node_id
+    where t_action_node.pid =#{pid,jdbcType=INTEGER} and t_action_node.is_show=1 and t_role_node.role_id=#{roleId,jdbcType=INTEGER}
+    order by t_action_node.sort_id
+  </select>
+     <select id="selectNode" resultType="Map">
+    select 
+   id, pid as _parentId, name, url, sort_id, is_show
+    from g_node
+    order by sort_id
+  </select>
+   <select id="selectBypid" resultType="Map">
+    select 
+    id,name,pid
+    from g_node
+    where pid = #{pid,jdbcType=INTEGER}
+    order by sort_id
+  </select>
+   <select id="selectBypid2" resultType="Map">
+    select 
+    id,name as text,pid,sort_id,url
+    from g_node
+    where pid = #{pid,jdbcType=INTEGER}
+    order by sort_id
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from g_node
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.wj.model.ActionNode">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_node (pid, name, url, 
+       sort_id, is_show)
+    values (#{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{sortId,jdbcType=INTEGER}, #{isShow,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.wj.model.ActionNode">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_action_node
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="sortId != null">
+        sort_id,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=BIT},
+      </if>
+      <if test="sortId != null">
+        #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.wj.model.ActionNode">
+    update g_node
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sortId != null">
+        sort_id = #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.wj.model.ActionNode">
+    update t_action_node
+    set pid = #{pid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      level = #{level,jdbcType=BIT},
+      sort_id = #{sortId,jdbcType=INTEGER},
+      is_show = #{isShow,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

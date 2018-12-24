@@ -18,7 +18,9 @@ public class GOrdinaryCherk implements Serializable {
     private String checkDoctor;
 
     /**
+
      * 1£ºÊÇ£º0£º²»ÊÇ
+
      */
     private Boolean isCompleted;
 

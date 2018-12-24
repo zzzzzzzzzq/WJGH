@@ -126,6 +126,7 @@
     from g_patient_info
     where patient_identityid =  #{patientIden,jdbcType=VARCHAR}
   </select>
+
   <select id="selectPatientIdentityid" resultType="string">
     select 
     patient_identityid 
@@ -143,6 +144,18 @@
     patient_name, patient_sex, patient_age
     from g_patient_info
     where patient_identityid =  #{patientIdentityid,jdbcType=VARCHAR}
+
+  <select id="findPinfo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+	from g_patient_info
+	where id = 
+		(
+		select patient_id
+		from g_ordinary_cherk
+		where pay_no = 123
+		)
+
   </select>
 <select id="findPinfo" resultMap="BaseResultMap">
     select 

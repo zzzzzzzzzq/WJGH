@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyHtml.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3"></meta>
+    <meta name="description" content="this is my page"></meta>
+    <meta name="content-type" content="text/html; charset=UTF-8"></meta>
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <form id="form" action="" method="post">
+    <table align="center" class="form-table">
+		<tr>
+			<td>角色名称：</td>
+			<td>
+				<input name="name" class="jq-validatebox" value="" type="text" data-options="required:true" validType="loginName"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">权限等级 ：</td>
+			<td>
+				<select class="jq-combobox" name="level">
+ 				 	<option value="1">高级</option>
+ 				 	<option value="2">中级</option>
+ 				 	<option value="3">低级</option>
+ 				 	<option value="4">最低级</option>
+				</select>	
+			</td>
+		</tr>
+		<tr>
+			<td>备注：</td>
+			<td>
+				<input name="remark"  value="" type="text"/>
+			</td>
+		</tr>
+		<tr>
+			<td>是否启用：</td>
+			<td>
+				<label class="radio inline">
+				  <input type="radio" name="status" value="0" />
+				  禁用
+				</label>
+				<label class="radio inline">
+				  <input type="radio" name="status" value="1" checked="true"/>
+				  启用
+				</label>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<button type="submit" class="button button-primary button-rounded button-small">确定</button>
+			</td>
+		</tr>
+	</table>
+</form>
+  </body>
+</html>

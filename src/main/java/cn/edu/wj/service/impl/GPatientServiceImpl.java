@@ -22,6 +22,7 @@ public class GPatientServiceImpl implements GPatientService {
 	}
 
 	@Override
+
 	public List<GPatientInfo> selectPatientInfo(String patientIden) {
 		// TODO Auto-generated method stub
 		return GPatientInfoMapper.selectPatientInfo(patientIden);
@@ -32,6 +33,17 @@ public class GPatientServiceImpl implements GPatientService {
 		// TODO Auto-generated method stub
 		
 		return GPatientInfoMapper.selectPatientIdentityid(patientcardId);
+	
+	@Override
+	public int selectPatientId(String patientIdentityid) {
+		// TODO Auto-generated method stub
+		return GPatientInfoMapper.selectPatientId(patientIdentityid);
+	}
+		
+	public GPatientInfo findPinfo(int opayno) {
+		// TODO Auto-generated method stub
+		return GPatientInfoMapper.findPinfo(opayno);
+
 	}
 
 	@Override

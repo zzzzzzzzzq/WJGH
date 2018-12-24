@@ -1,9 +1,19 @@
 package cn.edu.wj.mapper;
 
+
+import cn.edu.wj.model.GOrdinaryCherk;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import cn.edu.wj.model.GMedicine;
+import cn.edu.wj.model.GMedicineAllocation;
 import cn.edu.wj.model.GOrdinaryCherk;
 
 public interface GOrdinaryCherkMapper {
-int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id);
+
 
     int insert(GOrdinaryCherk record);
 
@@ -26,4 +36,6 @@ int deleteByPrimaryKey(Integer id);
 	int finishOrdinary(GOrdinaryCherk record);
 
 	String findotype(int opayno);
+
 }
+

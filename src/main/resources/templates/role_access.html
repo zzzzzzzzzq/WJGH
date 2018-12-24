@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>role_access.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3"></meta>
+    <meta name="description" content="this is my page"></meta>
+    <meta name="content-type" content="text/html; charset=UTF-8"></meta>
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+  <form id="form" action="" method="post">
+ <!-- <c:forEach items ="${node}" var="parent"> -->
+    <div class="access-box" th:each="parent : ${node}">
+        <div class="bd">
+		     <div class="m-box J_cnodeBox mb10">
+		        <div class="hd pl10">
+		            <label>
+		        		 <input type="checkbox" class="module_cbo" name="nodeId" th:value="${parent.id}" th:if="${parent.isCheck==true}" th:checked="${true}"/>
+		        		 <input type="checkbox" class="module_cbo" name="nodeId" th:value="${parent.id}" th:if="${parent.isCheck!=true}" />
+		             &nbsp;<span th:text="${parent.name}"></span>
+		            </label>
+		        </div>
+		        <div class="bd pl10 pt10">
+		         <!-- <c:forEach items ="${parent.children}" var="children"> -->
+		            <div class="rule_check mb10" th:each="children : ${parent.children}">
+		                <div style="margin-bottom: 5px;">
+		                    <label class="checkbox">
+		                      	<input class="rules_row" type="checkbox" name="nodeId" th:value="${children.id}" th:if="${children.isCheck==true}" th:checked="${true}"/>
+		                    	<input class="rules_row" type="checkbox" name="nodeId" th:value="${children.id}" th:if="${children.isCheck!=true}"/>&nbsp;
+		                    <span th:text="${children.name}"></span>
+		                    </label>
+		                </div>
+		            </div>
+		         <!--  </c:forEach> -->
+		        </div>
+		    </div>
+        </div>
+    </div>
+<!--     </c:forEach> -->
+    <div class="form-actions">
+        <button type="submit" class="layui-btn layui-btn-warm">确定授权</button>
+    </div>
+</form>
+
+  </body>
+</html>

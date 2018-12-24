@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>标题</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+    <body>
+   
+        <form action="/finishOrdinary"  method = "post">
+        <input type="hidden" name = "opayno"  th:value = "${session.opayno}" />
+        	<p>检查结果：<input type="text" name = "oresult"/></p>
+            <p>检查医生：<input type="text" name = "oname"/></p>
+            <button type= "submit">确认提交</button>
+        </form>
+
+        <script src="js/zepto.min.js"></script>
+    </body>
+    </html>

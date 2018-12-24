@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>action_node.html</title>
+	<meta charset="UTF-8"/>
+  	<link href="../ui/jqui.min.css" rel="stylesheet" type="text/css"/>
+	<script src="../jquery-easyui-1.6.11/jquery.min.js"></script>
+	<script src="../jquery-easyui-1.6.11/jquery.easyui.min.js"></script>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../layui/css/layui.css" media="all"/>
+
+	
+	<script src="../mod/jquery/jquery.min.js" type="text/javascript"></script>
+	<script src="../admin/ui/jqui.min.js" type="text/javascript"></script>
+	<script src="../mod/jquery/jquery.hashchange.min.js" type="text/javascript"></script>
+	<script src="../admin/js/admin.min.js" type="text/javascript"></script>
+	<script src="../mod/fancybox/jquery.fancybox.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+<div class="jq-layout rel" data-options="fit:true">
+	<div data-options="region:'north',border:false" style="overflow: hidden;">
+        <div id="grid-toolbar" class="clearfix p5">
+<!-- 			<a id="add" class="button button-action button-rounded button-small"><i class="fa fa-plus"></i>新增</a>
+			<a id="edit" class="button button-primary button-rounded button-small"><i class="fa fa-star"></i>编辑</a>
+			<a id="delete" class="button button-caution button-rounded button-small"><i class="fa fa-trash-o"></i>删除</a>
+			<a id="access" class="button button-highlight button-rounded button-small">设置权限</a>
+ -->
+ 			<a id="add" class="layui-btn layui-btn-normal">新增</a>
+		    <button id="edit" class="layui-btn layui-btn-warm">编辑</button>
+		    <button id="delete" class="layui-btn layui-btn-danger">删除</button>
+		    <button id="access" class="layui-btn layui-btn-danger">设置权限</button>
+         </div>
+    </div>
+    <div data-options="region:'center',border:false">
+		<table title="角色列表" fit="true" class="jq-datagrid" data-options="{
+			url:'/admin/role',
+			method:'post',
+			fitColumns:false,
+			columns: [[
+				{field:'id',checkbox:true},
+				{field:'name',title:'角色名称',width:200},
+				{field:'level',title:'角色等级',width:300},
+				{field:'remark',title:'备注',width:300},
+				{field:'status',title:'是否启用',width:200,formatter:status}
+			]]}
+			">
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+	$("#add").on("click", function(){
+		App.popup('/admin/role_add',"新增角色");
+	});
+	$("#edit,#delete,#access").on("click", function(){
+        var data = $(".jq-datagrid").datagrid("getSelected");
+        if(data == null){
+            App.alert("请先选择一条记录","warning");
+        }else{
+            var id = data.id;
+            var eleId = $(this).attr("id");
+            if(eleId == "edit"){
+                App.popup('/admin/role_edit?id='+id,"编辑角色");
+            }else if(eleId == "delete"){
+                App.ajax("/admin/role_delete?id="+id);
+            }else if(eleId == "access"){
+                App.popup('/admin/role_access?id='+id,{
+                    title: "设置权限",
+                    width: 600,
+                    height: 600
+                });
+            }
+        }
+    });
+function status(v, row, index) {
+	var val;
+	if (v == 0) {
+		val = '<font color="black">未启用</font>';
+	} else if (v == 1) {
+		val = '<font color="green">已启用</font>';
+	} else {
+		return v;
+	}
+	return val;
+}
+</script>
+  </body>
+
+</html>

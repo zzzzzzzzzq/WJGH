@@ -18,10 +18,11 @@ public interface GPatientInfoMapper {
     int updateByPrimaryKey(GPatientInfo record);
 
 	List<GPatientInfo> findPatient(String patientIden);
-	
+
 	List<GPatientInfo> selectPatientInfo(String patientIden);
 	
 	String selectPatientIdentityid(int patientcardId);
+
 	
 	int selectPatientId(String patientIdentityid);
 	GPatientInfo findPinfo(int opayno);
