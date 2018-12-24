@@ -160,4 +160,9 @@
       check_date = #{checkDate,jdbcType=INTEGER}
     where pay_no = #{payNo,jdbcType=INTEGER}
   </update>
+  <select id="findotype" resultType="String">
+    select check_item
+    from g_ordinary_cherk 
+    where pay_no = #{opayno,jdbcType=INTEGER}
+  </select>
 </mapper>

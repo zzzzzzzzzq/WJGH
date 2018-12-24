@@ -30,4 +30,6 @@ public interface GOrdinaryCherkMapper {
 	List<GMedicineAllocation> selectPageUnFOrdinary(@Param("m")int m, @Param("n")int n, @Param("if")int ifFinish,@Param("p") int opayno);
 
 	int finishOrdinary(GOrdinaryCherk record);
+
+	String findotype(int opayno);
 }

@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.edu.wj.model.GMedicineAllocation;
 import cn.edu.wj.model.GOrdinaryCherk;
+import cn.edu.wj.model.GPatientInfo;
 import cn.edu.wj.service.GOrdinaryService;
+import cn.edu.wj.service.GPatientService;
 import cn.edu.wj.service.impl.GOrdinaryServiceImpl;
 import cn.edu.wj.util.Fn;
 import cn.edu.wj.util.UIUtils;
+import cn.edu.wj.mapper.GPatientInfoMapper;
 
 @Controller
 public class OrdinaryController {
@@ -22,6 +25,8 @@ public class OrdinaryController {
 	GOrdinaryServiceImpl gOrdinaryServiceImpl;
 	@Autowired
 	GOrdinaryService gOrdinaryService;
+	@Autowired
+	GPatientService GPatientService;
 	
 	@RequestMapping("/ordinary")//原本是index
     public String medicine(Model m) throws Exception{ 
@@ -80,7 +85,24 @@ public class OrdinaryController {
 		record.setIsCompleted(isCompleted);
 		int result = gOrdinaryService.finishOrdinary(record);
 		System.out.println("检查结果"+result+"11111");
-		System.out.println("收费单号"+opayno+"!!!!!!!!!!!!!!!");
-        return "/succeed";
+		HttpSession session = request.getSession();//把数据保存在session域对象中
+        GPatientInfo gPatientInfo = new GPatientInfo();
+        gPatientInfo = GPatientService.findPinfo(opayno);
+        String pname = gPatientInfo.getPatientName();
+        String psex = gPatientInfo.getPatientSex();
+        
+		session.setAttribute("pname", pname);
+		session.setAttribute("psex", psex);
+		session.setAttribute("checkResult", checkResult);//
+        session.setAttribute("checkDoctor", checkDoctor);//
+        String otype = gOrdinaryService.findotype(opayno);
+        session.setAttribute("otype", otype);
+        System.out.println(pname);
+        System.out.println(psex);
+        System.out.println(checkResult);
+        System.out.println(checkDoctor);
+        System.out.println(otype);
+		System.out.println("检查单号"+opayno+"!!!!!!!!!!!!!!!");
+        return "/Osucceed";
     }
 }

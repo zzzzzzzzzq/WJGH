@@ -6,4 +6,6 @@ public interface GOrdinaryService {
 
 	int finishOrdinary(GOrdinaryCherk record);
 
+	String findotype(int opayno);
+
 }

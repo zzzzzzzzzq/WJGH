@@ -21,4 +21,10 @@ public class GPatientServiceImpl implements GPatientService {
 		return GPatientInfoMapper.findPatient(patientIden);
 	}
 
+	@Override
+	public GPatientInfo findPinfo(int opayno) {
+		// TODO Auto-generated method stub
+		return GPatientInfoMapper.findPinfo(opayno);
+	}
+
 }

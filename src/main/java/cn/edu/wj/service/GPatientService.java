@@ -8,4 +8,6 @@ public interface GPatientService {
 
 	 List<GPatientInfo> patientLogin(String patientIden);
 
+	GPatientInfo findPinfo(int opayno);
+
 }

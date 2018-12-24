@@ -18,4 +18,7 @@ public interface GPatientInfoMapper {
     int updateByPrimaryKey(GPatientInfo record);
 
 	List<GPatientInfo> findPatient(String patientIden);
+
+
+	GPatientInfo findPinfo(int opayno);
 }

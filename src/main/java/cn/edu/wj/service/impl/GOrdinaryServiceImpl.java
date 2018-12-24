@@ -52,4 +52,10 @@ public class GOrdinaryServiceImpl implements GOrdinaryService{
 		return GOrdinaryCherkMapper.finishOrdinary(record);
 	}
 
+	@Override
+	public String findotype(int opayno) {
+		// TODO Auto-generated method stub
+		return GOrdinaryCherkMapper.findotype(opayno);
+	}
+
 }
