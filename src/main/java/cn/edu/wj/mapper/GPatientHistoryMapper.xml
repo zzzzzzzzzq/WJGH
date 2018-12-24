@@ -45,5 +45,15 @@
     where patient_identityid = #{patientIdentityid,jdbcType=VARCHAR} 
     and is_completed = "0"
   </update>
+  <insert id="insert" parameterType="cn.edu.wj.model.GPatientHistory"  >
+      insert into g_patient_history (patient_identityid, doctor, is_completed, date) 
+    values (#{patientIdentityid,jdbcType=VARCHAR}, #{doctor,jdbcType=VARCHAR}, #{isCompleted,jdbcType=BIT}, #{date,jdbcType=INTEGER})
+       
+  </insert>
+  <update id="updateStatus" parameterType="cn.edu.wj.model.GPatientHistory">
+    update g_patient_history
+    set is_completed = "1" 
+    where patient_identityid = #{patientIdentityid,jdbcType=VARCHAR} 
+  </update>
   
 </mapper>

@@ -34,4 +34,16 @@ public class GPatientServiceImpl implements GPatientService {
 		return GPatientInfoMapper.selectPatientIdentityid(patientcardId);
 	}
 
+	@Override
+	public int selectPatientId(String patientIdentityid) {
+		// TODO Auto-generated method stub
+		return GPatientInfoMapper.selectPatientId(patientIdentityid);
+	}
+
+	public GPatientInfo findPinfo(int opayno) {
+		// TODO Auto-generated method stub
+		return GPatientInfoMapper.findPinfo(opayno);
+
+	}
+
 }

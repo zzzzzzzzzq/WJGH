@@ -20,5 +20,48 @@
       #{isPay,jdbcType=BIT})
        
   </insert>
+  <select id="selectPayRecordInfo" resultMap="BaseResultMap">
+    select 
+    pay_no, doctor, pay_type, pay_money, pay_way, pay_time, is_pay
+    from g_pay_record
+    where pay_no =  #{payNo,jdbcType=INTEGER}
+  </select>
+  <select id="findAllPayRecordInfo" parameterType="cn.edu.wj.model.GPayRecord" resultMap="BaseResultMap"  >
+  	<if test="_parameter!=null">
+  	select 
+  	<include refid="Base_Column_List" />
+    from g_pay_record 
+  	where pay_no =  #{payNo,jdbcType=INTEGER}
+  	</if>
+  </select>
+  <select id="selectPage" resultType="Map">
+  
+  	<if test="_parameter!=null">
+  		SELECT 
+  		<include refid="Base_Column_List" />
+  		FROM g_pay_record 
+  		where pay_no =  #{payNo,jdbcType=INTEGER} 
+		limit #{m},#{n}
+	</if>
+	</select>
+	<update id="updateGPayRecordId" parameterType="cn.edu.wj.model.GPayRecord">
+	    update g_pay_record
+	    set
+	    <if test="type == 'doctor'">
+	    	doctor = #{gpr.doctor,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="type == 'pay_way'">
+	    	pay_way = #{gpr.payWay,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="type == 'pay_time'">
+	    	pay_time = #{gpr.payTime,jdbcType=INTEGER} 
+	    </if>
+	    where id = #{gpr.id,jdbcType=INTEGER}
+	 </update>
+	 <update id="updateGPayRecord" parameterType="cn.edu.wj.model.GPayRecord">
+	    update g_pay_record
+	    set is_pay = 1, pay_time = 0
+	    where id = #{id,jdbcType=INTEGER}
+	 </update>
   
 </mapper>

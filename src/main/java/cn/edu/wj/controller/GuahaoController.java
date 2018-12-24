@@ -49,7 +49,7 @@ public class GuahaoController {
 		System.out.println(doctorName);
 		System.out.println(department);
 		String price = "10";
-		String realPrice = "10";
+		String realPrice = "8";
 		strs.add(department);
 		strs.add(doctorName);
 		strs.add(price);
@@ -63,11 +63,12 @@ public class GuahaoController {
     public String RealRegistration(HttpServletRequest request, Model m) throws Exception{ 
 		System.out.println("hhhh");
 		String patientIdentityid = "330102199003075670";
+		
 		String department = request.getParameter("department");
 		String doctor = request.getParameter("doctorName");
 		boolean isCompleted =false;
 		int time = 0;
-		int payNo = 1234567891;
+		int payNo = 411141414;
 		
 		String payType = "挂号";
 		int payMoney = Integer.valueOf(request.getParameter("payMoney"));
@@ -88,7 +89,7 @@ public class GuahaoController {
 		gpay.setPayType(payType);
 		gpay.setPayMoney(payMoney);
 		gpay.setIsPay(isPay);
-		int result2 =gpayService.insert(gpay);
+		int result2 = gpayService.insert(gpay);
 		
 		
         return "/registration";

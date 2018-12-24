@@ -9,7 +9,7 @@
   <artifactId>wj</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>WJGH</name>
-  
+
   <dependencies>
   	<dependency>
 			<groupId>org.springframework.boot</groupId>

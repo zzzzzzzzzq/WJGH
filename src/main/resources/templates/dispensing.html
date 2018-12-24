@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>药库</title>
+		<link rel="stylesheet" href="layui/css/layui.css" media="all"/>
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <style type="text/css">
+  	.left{
+  		float: left;
+  		height: 500px;
+  		width: 50%;
+  	}
+  	.right{
+  		/* width: 50%; */
+  		float: left;
+  		
+  	}
+  	.left table{
+  		width: 100%;
+  	}
+  	.left th,.left td{
+  		width: 25%;
+  		text-align: center;
+  	}
+  	.shangchuan{
+  		margin-left: 250px;
+  	}
+  	.re{
+  		display: none;
+  	}
+  </style>
+	</head>
+	<body>
+		<div class="left">
+			<form>
+			 <table lay-filter="parse-table-demo" id="medlist">
+			 <!--  <thead> -->
+			    <tr>
+			      <th lay-data="{field:'username'}">药品名</th>
+			      <th lay-data="{field:'num'}">数量</th>
+			      <th lay-data="{field:'price'}">单价</th>
+			      <th lay-data="{field:'option'}">操作</th>
+			    </tr> 
+			 <!--  </thead>
+			  <tbody >
+			  		<tr style="display:none">
+			  			<td></td>
+			  			<td></td>
+			  			<td></td>
+			  			<td></td>
+			  		</tr>
+			  </tbody>  -->
+			</table>
+			<button class="layui-btn" lay-submit="" lay-filter="demo1">上传配药</button>
+			</form>
+		</div>
+		<div class="right">
+			<div class="demoTable">
+			  搜索药品：
+			  <div class="layui-inline">
+			    <input class="layui-input" name="id" id="demoReload" autocomplete="off"/>
+			  </div>
+			  <button class="layui-btn shangchuan" data-type="reload">搜索</button>
+			<table id="demo" lay-filter="test"></table>
+			
+		</div>
+		
+	
+	<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="add">添加</a>
+</script>
+	
+	<script>
+		layui.use('table', function(){
+		  var table = layui.table;
+		 /*  table.init('parse-table-demo', { //转化静态表格
+	        //height: 'full-500'
+	      }); */
+		  table.render({
+		     elem: '#demo'
+		    ,url:'/storage'
+		    ,id: 'idTest'
+		    ,limit:10
+		    ,request: {pageName: 'page' ,limitName: 'limit' } 
+		    ,cols: [[
+		   	  {field:'id', width:50, title: 'ID'}
+		      ,{field:'name', width:100, title: '药品名'}
+		      ,{field:'price', width:80, title: '价格'}
+		      ,{field:'repertory', width:80, title: '库存'}
+		      ,{field:'type', width:100, title: '类别'}
+		      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:100}
+		    ]]
+		    ,page: true
+		     ,skin: 'line' //行边框风格
+			  ,even: true //开启隔行背景
+			  ,size: 'lg' //小尺寸的表格
+			  });
+			  
+		  	$("#select").on("click", function(){
+				var  name= $("#name").val();
+				var  phone= $("#phone").val();
+				var  no= $("#no").val();
+				var  id= $("#id").val();
+				var  school= $("#school").val();
+				var  grade= $("#grade").val();
+				var  classe= $("#classe").val();
+				var  sex= $("#sex").val();
+			 	table.reload('idTest', {
+			    url: '/select'
+			    ,where: {name:name,phone:phone,no:no,id:id,
+			    		school:school,grade:grade,classe:classe,sex:sex} 
+			  	});
+				layer.msg("搜索成功！");
+				
+				
+			});
+			var vid;
+			table.on('checkbox(test)', function(obj){
+			  console.log(obj.data.id); //选中行的相关数据
+			  vid=obj.data.id;
+			});
+			$("#start").on("click", function(){
+				if(vid==null){
+					layer.msg("请选择一条数据在操作！")
+				}else{
+				 	table.reload('idTest', {
+				    url: '/start'
+				    ,where: {id:vid} //设定异步数据接口的额外参数
+				  	});
+					layer.msg("启用成功！");
+				}
+				
+			});
+			$("#stop").on("click", function(){
+				if(vid==null){
+					layer.msg("请选择一条数据在操作！")
+				}else{
+					table.reload('idTest', {
+					  url: '/stop'
+					  ,where: {id:vid} //设定异步数据接口的额外参数
+					});
+					layer.msg('禁用成功！');
+				}
+			});
+			//监听行工具事件
+  table.on('tool(test)', function(obj){
+    var data = obj.data;
+    console.log(data)
+    if(obj.event === 'add'){
+      
+ 
+      var a = document.getElementById("medlist")
+      console.log(a)
+      var addd = '<tr>'+
+              		'<td class="med_name">'+data.name+'</td>'+
+              		'<td class="med_num"><input type="text" value="1" style="width:100px;"/></td>'+
+              		'<td class="med_price">'+data.price+'</td>'+
+              		'<td><a class="layui-btn layui-btn-danger layui-btn-xs del" href="javascript:void(0);" onclick="del(this)">删除</a></td>'+
+              	'</tr>'
+      $("#medlist").append(addd)
+     
+    }
+  });
+		});
+	</script>
+	</div>
+	<script src="js/jquery.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		function del(Obj) {
+			// body...
+			console.log(2);	
+			$(Obj).parent().parent().remove();
+/* 			layui.use('table', function(){
+		  var table = layui.table;
+		  table.init('parse-table-demo', { //转化静态表格
+	        //height: 'full-500'
+	      });
+
+		}); */
+		};
+	</script>
+	</body>
+	<script>
+	$("#check").on('click',function(){
+layui.use('table', function(){
+  var table = layui.table;
+  //监听表格复选框选择
+  table.on('checkbox(demo)', function(obj){
+    console.log(obj)
+  });
+  //监听工具条
+
+  
+  var $ = layui.$, active = {
+    getCheckData: function(){ //获取选中数据
+      var checkStatus = table.checkStatus('idTest')
+      ,data = checkStatus.data;
+      layer.alert(JSON.stringify(data));
+    }
+    ,getCheckLength: function(){ //获取选中数目
+      var checkStatus = table.checkStatus('idTest')
+      ,data = checkStatus.data;
+      layer.msg('选中了：'+ data.length + ' 个');
+    }
+    ,isAll: function(){ //验证是否全选
+      var checkStatus = table.checkStatus('idTest');
+      layer.msg(checkStatus.isAll ? '全选': '未全选')
+    }
+  };
+  
+  $('.demoTable .layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+});
+});
+</script>
+
+</html>

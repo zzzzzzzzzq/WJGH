@@ -22,4 +22,7 @@ public interface GPatientInfoMapper {
 	List<GPatientInfo> selectPatientInfo(String patientIden);
 	
 	String selectPatientIdentityid(int patientcardId);
+	
+	int selectPatientId(String patientIdentityid);
+	GPatientInfo findPinfo(int opayno);
 }

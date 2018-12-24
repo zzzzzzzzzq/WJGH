@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.wj.mapper.GOrdinaryCherkMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.wj.model.GOrdinaryCherk">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="check_item" jdbcType="VARCHAR" property="checkItem" />
+    <result column="check_result" jdbcType="VARCHAR" property="checkResult" />
+    <result column="check_doctor" jdbcType="VARCHAR" property="checkDoctor" />
+    <result column="is_completed" jdbcType="BIT" property="isCompleted" />
+    <result column="check_date" jdbcType="INTEGER" property="checkDate" />
+    <result column="pay_no" jdbcType="INTEGER" property="payNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, patient_id, check_item, check_result, check_doctor, is_completed, check_date, 
+    pay_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_ordinary_cherk
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from g_ordinary_cherk
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.wj.model.GOrdinaryCherk">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_ordinary_cherk (patient_id, check_item, check_result, 
+      check_doctor, is_completed, check_date, 
+      pay_no)
+    values (#{patientId,jdbcType=INTEGER}, #{checkItem,jdbcType=VARCHAR}, #{checkResult,jdbcType=VARCHAR}, 
+      #{checkDoctor,jdbcType=VARCHAR}, #{isCompleted,jdbcType=BIT}, #{checkDate,jdbcType=INTEGER}, 
+      #{payNo,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.wj.model.GOrdinaryCherk">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into g_ordinary_cherk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="checkItem != null">
+        check_item,
+      </if>
+      <if test="checkResult != null">
+        check_result,
+      </if>
+      <if test="checkDoctor != null">
+        check_doctor,
+      </if>
+      <if test="isCompleted != null">
+        is_completed,
+      </if>
+      <if test="checkDate != null">
+        check_date,
+      </if>
+      <if test="payNo != null">
+        pay_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="patientId != null">
+        #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="checkItem != null">
+        #{checkItem,jdbcType=VARCHAR},
+      </if>
+      <if test="checkResult != null">
+        #{checkResult,jdbcType=VARCHAR},
+      </if>
+      <if test="checkDoctor != null">
+        #{checkDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompleted != null">
+        #{isCompleted,jdbcType=BIT},
+      </if>
+      <if test="checkDate != null">
+        #{checkDate,jdbcType=INTEGER},
+      </if>
+      <if test="payNo != null">
+        #{payNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.wj.model.GOrdinaryCherk">
+    update g_ordinary_cherk
+    <set>
+      <if test="patientId != null">
+        patient_id = #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="checkItem != null">
+        check_item = #{checkItem,jdbcType=VARCHAR},
+      </if>
+      <if test="checkResult != null">
+        check_result = #{checkResult,jdbcType=VARCHAR},
+      </if>
+      <if test="checkDoctor != null">
+        check_doctor = #{checkDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompleted != null">
+        is_completed = #{isCompleted,jdbcType=BIT},
+      </if>
+      <if test="checkDate != null">
+        check_date = #{checkDate,jdbcType=INTEGER},
+      </if>
+      <if test="payNo != null">
+        pay_no = #{payNo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.wj.model.GOrdinaryCherk">
+    update g_ordinary_cherk
+    set patient_id = #{patientId,jdbcType=INTEGER},
+      check_item = #{checkItem,jdbcType=VARCHAR},
+      check_result = #{checkResult,jdbcType=VARCHAR},
+      check_doctor = #{checkDoctor,jdbcType=VARCHAR},
+      is_completed = #{isCompleted,jdbcType=BIT},
+      check_date = #{checkDate,jdbcType=INTEGER},
+      pay_no = #{payNo,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findAllOrdinary" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_ordinary_cherk 
+  </select>
+  <select id="selectPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_ordinary_cherk 
+    limit #{m},#{n}
+  </select>
+  <select id="findUnFOrdinary" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_ordinary_cherk 
+    where is_completed = #{if,jdbcType=INTEGER}
+    and pay_no = #{p,jdbcType=INTEGER}
+  </select>
+  <select id="selectPageUnFOrdinary" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from g_ordinary_cherk 
+    where is_completed = #{if,jdbcType=INTEGER}
+    and pay_no = #{p,jdbcType=INTEGER}
+    limit #{m},#{n}
+  </select>
+  <update id="finishOrdinary" parameterType="cn.edu.wj.model.GMedicineAllocation">
+    update g_ordinary_cherk
+      set	check_doctor = #{checkDoctor,jdbcType=VARCHAR},
+      		check_result = #{checkResult,jdbcType=VARCHAR},
+      is_completed = #{isCompleted,jdbcType=BIT},
+      check_date = #{checkDate,jdbcType=INTEGER}
+    where pay_no = #{payNo,jdbcType=INTEGER}
+  </update>
+  <select id="findotype" resultType="String">
+    select check_item
+    from g_ordinary_cherk 
+    where pay_no = #{opayno,jdbcType=INTEGER}
+  </select>
+</mapper>

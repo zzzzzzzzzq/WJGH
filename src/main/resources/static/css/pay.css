@@ -1,0 +1,19 @@
+.layui-inline{
+				margin-left: 340px;
+				margin-right: 10px;
+			}
+			.layui-form-label{
+				width: 85px;
+			}
+			.finish{
+				position: absolute;
+				top: 0px;
+				right: 350px;
+			}
+			#pay_con{
+				margin:0 auto;
+				margin-top: 20px;
+				
+				width: 1000px;
+				height: 600px;
+			}

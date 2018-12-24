@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title></title>
+		<script src="layui/layui.js"></script>
+		<link rel="stylesheet" href="layui/css/layui.css"  media="all"/>
+		<script>
+			layui.use('form',function(){
+				var form = layui.form;
+				form.render();
+			});
+		</script>
+		<style>
+			.xiangmu{
+				margin-top: 20px;
+				margin-left: -40px;
+			}
+			.jiancha_button{
+				margin:0px;
+				margin-left: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<form method="post" class="layui-form" action="/real_ordinary_cherk">
+			<input type="text" name="patientId" th:value="${patientId}" style="display:none;"/>
+			<div class="layui-form-item xiangmu">
+			    <div class="layui-input-block">
+			      <input type="checkbox" name="cherk1" value="血常规" title="血常规"/>
+			      <input type="checkbox" name="cherk2" value="尿常规" title="尿常规"/>
+			      <input type="checkbox" name="cherk3" value="大便常规" title="大便常规"/>
+			      <input type="checkbox" name="cherk4" value="肝功能检查" title="肝功能检查"/>
+			    </div>
+			</div>
+			<div class="layui-form-item jiancha_button">
+		        <div class="layui-input-block">
+		            <button class="layui-btn" lay-submit="" lay-filter="formDemo">立即提交</button>
+		            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		        </div>
+		    </div>
+		</form>
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" th:inline="javascript">
+		$(document).ready(function(){
+			var a = [[${a}]];
+			if(a==1){
+				window.parent.location.reload();
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.layer.close(index);
+			}
+		});
+		</script>
+	</body>
+</html>

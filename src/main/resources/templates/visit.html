@@ -5,7 +5,7 @@
 		<title></title>
 		<link rel="stylesheet" href="layui/css/layui.css"  media="all"/>
 		<link rel="stylesheet" href="css/visit.css" />
-		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/jquery.js"></script>
     	<script src="layui/layui.js" charset="utf-8"></script>
     	<style type="text/css">
     	.layui-table-view select[lay-ignore]{
@@ -23,7 +23,7 @@
 		    </div>
 		    <button class="layui-btn" lay-submit="" lay-filter="demo1">开始就诊</button>
 		</form>
-		<a href="/visit"><button class="layui-btn layui-btn-danger finish">结束就诊</button></a>
+		<a href="/finish_visit"><button class="layui-btn layui-btn-danger finish">结束就诊</button></a>
 		<div id="con_left">
 			<div class="icon">
 				<img src="img/icon-user.png" />
@@ -44,7 +44,7 @@
 		</div>
 		<hr />
 		<div id="bottom_left">
-			<a th:href="@{'medicine_allocation/?patientIdentityid='+${pId}}">
+			<a href="/dispensing">
 				<div class="peiyao">
 				配药
 				</div>
@@ -141,9 +141,27 @@
 				}
 			});
 		});
-
+		
+		$(document).ready(function(){
+				$(".jiancha").click(function(){
+					
+					layer.open({
+						type: 2,
+						title:['请选择常规性检查项目：','font-size:18px;'],
+					    area: ['580px', 'auto'],
+					    shadeClose: true, //点击遮罩关闭
+					    content: '/ordinary_cherk?patientIdentityid='+[[${pId}]],
+					    end: function () {
+					        location.reload();
+					    }
+					});
+					
+				});
+				
+			});
 
 	</script>
+	
 	
 		
 	</body>

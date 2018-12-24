@@ -48,6 +48,20 @@ public class GPatientHistoryServiceImpl implements GPatientHistoryService {
 		return null;
 	}
 
+	@Override
+	public int insert(GPatientHistory gph) {
+		// TODO Auto-generated method stub
+		return GPatientHistoryMapper.insert(gph);
+	}
+
+	@Override
+	public int updateStatus(String patientIdentityid) {
+		// TODO Auto-generated method stub
+		return GPatientHistoryMapper.updateStatus(patientIdentityid);
+	}
+
+	
+
 	
 
 	

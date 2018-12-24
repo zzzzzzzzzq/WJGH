@@ -12,4 +12,8 @@ public interface GPatientHistoryService {
 	 List<GPatientHistory> findAllGPatientHistory(String patientIdentityid);
 	 
 	 int updateGPatientHistory(GPatientHistory gph);
+	 
+	 int insert(GPatientHistory gph);
+	 
+	 int updateStatus(String patientIdentityid);
 }

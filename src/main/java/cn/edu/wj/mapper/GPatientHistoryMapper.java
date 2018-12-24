@@ -17,4 +17,8 @@ public interface GPatientHistoryMapper {
 	
 	int updateGPatientHistory(GPatientHistory gph);
 	
+	int insert(GPatientHistory gph);
+	
+	int updateStatus(String patientIdentityid);
+	
 }
