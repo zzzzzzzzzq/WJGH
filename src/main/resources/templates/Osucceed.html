@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title></title>
+		
+		
+	</head>
+	<body>
+	<table>
+<tr>
+  <td>病人：</td>
+  <td th:text = "${session.pname}" >200</td>
+</tr>
+<tr>
+  <td>性别：</td>
+  <td th:text = "${session. psex}" >500</td>
+</tr>
+<tr>
+  <td>结果：</td>
+  <td th:text = "${session. checkResult}" >200</td>
+</tr>
+<tr>
+  <td>配药医生：</td>
+  <td th:text = "${session.checkDoctor}" >500</td>
+</tr>
+<tr>
+  <td>检查类别：</td>
+  <td th:text = "${session.otype}" >500</td>
+</tr>
+</table>
+	</body>	
+</html>

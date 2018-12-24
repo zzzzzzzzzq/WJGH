@@ -12,4 +12,6 @@ public interface GPatientService {
 	 
 	 String selectPatientIdentityid(int patientcardId);
 
+	GPatientInfo findPinfo(int opayno);
+
 }
