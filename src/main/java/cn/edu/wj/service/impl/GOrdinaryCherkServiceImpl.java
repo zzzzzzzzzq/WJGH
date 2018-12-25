@@ -17,7 +17,7 @@ public class GOrdinaryCherkServiceImpl implements GOrdinaryCherkService {
 	@Override
 	public int insert(GOrdinaryCherk goc){
 		// TODO Auto-generated method stub
-				int result2 =gocMapper.insertSQL(goc);
+				int result2 =gocMapper.insert(goc);
 				return 0;
 	}
 	

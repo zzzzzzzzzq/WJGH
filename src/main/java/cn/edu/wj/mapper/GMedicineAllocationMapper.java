@@ -27,6 +27,8 @@ public interface GMedicineAllocationMapper {
 
 	int finishMedicine(GMedicineAllocation record);
 
-	List<GMedicineAllocation> selectAllocation(@Param("m")int m,@Param("n")int n);
+	List<GMedicineAllocation> selectAllocation(@Param("m")int m,@Param("n")int n,@Param("i")int ifFinish);
 
+	int insertSQL(GMedicineAllocation gma);
+	
 }

@@ -14,5 +14,7 @@ public interface GMedicineService {
 	public int delMedicine(int mid);
 
 	public int finishMedicine(GMedicineAllocation record);
+	
+	public int insert(GMedicineAllocation gma);
 
 }

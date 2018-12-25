@@ -112,7 +112,7 @@ public class MedicineController {
 //		List<GMedicine> gMedicine = gMedicineService.findMedicine();
 //		System.out.println(gMedicine);
 //		m.addAttribute("GAdmin",gMedicine);
-		System.out.println("saleMedicine");
+		System.out.println("unfinishMedicine");
     	System.out.println(page);
     	System.out.println(limit);
 		System.out.println("配药管理///////////////////////");//有关药品的service都用gMedicineService

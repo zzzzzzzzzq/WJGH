@@ -8,16 +8,26 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import cn.edu.wj.model.GAdmin;
+import cn.edu.wj.model.GMedicine;
+import cn.edu.wj.model.GMedicineAllocation;
 import cn.edu.wj.model.GOrdinaryCherk;
 import cn.edu.wj.model.GPatientHistory;
 import cn.edu.wj.model.GPatientInfo;
+import cn.edu.wj.model.GPayRecord;
+import cn.edu.wj.service.GMedicineService;
 import cn.edu.wj.service.GOrdinaryCherkService;
 import cn.edu.wj.service.GPatientHistoryService;
 import cn.edu.wj.service.GPatientService;
+import cn.edu.wj.service.GPayRecordService;
 import cn.edu.wj.service.impl.GPatientHistoryServiceImpl;
 import cn.edu.wj.util.Fn;
 import cn.edu.wj.util.UIUtils;
@@ -31,14 +41,18 @@ public class JiuzhenController {
 	@Autowired
 	GOrdinaryCherkService gocService;
 	@Autowired
+	GPayRecordService gpayService;
+	@Autowired
 	GPatientHistoryServiceImpl gphServiceImpl;
+	@Autowired
+	GMedicineService gMedicineService;
 	
 	@RequestMapping("/visit")
     public String Visit() throws Exception{ 
         return "/visit";
     }
 	
-	@RequestMapping(value="/start_visit",method = {RequestMethod.POST})
+	@RequestMapping(value="/start_visit")
     public String StartVisit(HttpServletRequest request, Model m) throws Exception{ 
 		int patientcardId = Integer.valueOf(request.getParameter("patientcardId"));
 		System.out.println(patientcardId);
@@ -104,6 +118,9 @@ public class JiuzhenController {
 	
 	@RequestMapping("/real_ordinary_cherk")
     public String RealOrdinaryCherk(HttpServletRequest request, Model m) throws Exception{ 
+		int payNo = 888231313;
+		String payType = "检查";
+		boolean isPay =false;
 		System.out.println("real_ordinary_cherk");
 		String id = request.getParameter("patientId");
 		int patientId = Integer.valueOf(id);
@@ -113,19 +130,19 @@ public class JiuzhenController {
 		String cherk1 = request.getParameter("cherk1");
 		if(cherk1!=null)
 			checks = checks +","+ cherk1;
-			money = money +","+ "50";
+			money = money +","+ "40";	//50为原价
 		String cherk2 = request.getParameter("cherk2");
 		if(cherk2!=null)
 			checks = checks +","+ cherk2;
-			money = money +","+ "20";
+			money = money +","+ "16";	//20为原价
 		String cherk3 = request.getParameter("cherk3");
 		if(cherk3!=null)
 			checks = checks +","+ cherk3;
-			money = money +","+ "30";
+			money = money +","+ "24";	//30为原价
 		String cherk4 = request.getParameter("cherk4");
 		if(cherk4!=null)
 			checks = checks +","+ cherk4;
-			money = money +","+ "60";
+			money = money +","+ "48";	//60为原价
 		System.out.println(cherk1+","+cherk2+","+cherk3+","+cherk4);
 		System.out.println("checks为："+checks);
 		String[] checkItems = checks.split(",");
@@ -136,22 +153,76 @@ public class JiuzhenController {
             int checkMoney = Integer.valueOf(checkMoneys[i]);
             GOrdinaryCherk goc = new GOrdinaryCherk();
             goc.setPatientId(patientId);
-            goc.setDoctor("外科医生1");
+            goc.setCheckDoctor("外科医生1");
             goc.setCheckItem(checkItem);
-            goc.setPayNo(241141612);
+            goc.setPayNo(payNo);
             goc.setCheckMoney(checkMoney);
             System.out.println(patientId+",__"+checkItem+",__"+checkMoney);
             int result = gocService.insert(goc);
             
+            GPayRecord gpay = new GPayRecord();
+    		gpay.setPayNo(payNo);
+    		gpay.setPayType(payType);
+    		gpay.setPayMoney(checkMoney);
+    		gpay.setIsPay(isPay);
+    		int result2 = gpayService.insert(gpay);
+            
         }
+		
+		
+		
 		int a= 1;
     	m.addAttribute("a",a);
     	return "ordinary_cherk";
     }
 	
-	@RequestMapping("/dispensing")
-    public String Dispensing() throws Exception{ 
+	@RequestMapping("/dispensing")//原本是index
+    public String medicine(Model m) throws Exception{ 
+//		List<GAdmin> GAdmin = reqService.findGAdmin();
+//		System.out.println(GAdmin);
+//		m.addAttribute("GAdmin",GAdmin);
+//		System.out.println("123");
         return "/dispensing";
+    }
+	
+	
+	@RequestMapping("/sub")
+	@ResponseBody
+    public String sub(@RequestBody JSONArray arr,HttpServletResponse response,Model m) throws Exception{ 
+		System.out.println("sdagfsadg3");
+        for(int i=0;i<arr.size();i++){
+        	Integer id=JSONObject.parseObject(JSONObject.toJSONString(arr.get(i))).getInteger("id");
+        	String name=JSONObject.parseObject(JSONObject.toJSONString(arr.get(i))).getString("name");
+            Integer num=JSONObject.parseObject(JSONObject.toJSONString(arr.get(i))).getInteger("num");
+            String price=JSONObject.parseObject(JSONObject.toJSONString(arr.get(i))).getString("price");
+            System.out.println(id+" "+name+" "+num+" "+price);
+            double medicineMoney = Double.valueOf(price);
+            System.out.println(medicineMoney);
+            int patientId = 1;
+            String doctor = "外科医生1";
+            boolean isCompleted =false;
+            int payNo = 99993123;
+            GMedicineAllocation gma = new GMedicineAllocation();
+            gma.setPatientId(patientId);
+            gma.setDoctor(doctor);
+            gma.setMedicineId(id);
+            gma.setMedicineNum(num);
+            gma.setIsCompleted(isCompleted);
+            gma.setPayNo(payNo);
+            gma.setMedicineMoney(medicineMoney);
+            int result = gMedicineService.insert(gma);
+            
+            int payMoney = (int)medicineMoney;
+            String payType = "配药";
+    		boolean isPay =false;
+            GPayRecord gpay = new GPayRecord();
+    		gpay.setPayNo(payNo);
+    		gpay.setPayType(payType);
+    		gpay.setPayMoney(payMoney);
+    		gpay.setIsPay(isPay);
+            int result2 = gpayService.insert(gpay);
+        }
+        return null;
     }
 	
 	@RequestMapping("/finish_visit")

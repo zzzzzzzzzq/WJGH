@@ -10,6 +10,8 @@ public class GMedicineAllocation implements Serializable {
     private Integer id;
 
     private Integer patientId;
+    
+    private String doctor;
 
     private Integer medicineId;
 
@@ -18,13 +20,15 @@ public class GMedicineAllocation implements Serializable {
     private String medicineDoctor;
 
     /**
-     * 1：是：0：不是
+     * 1：是：0：不是medicine_money
      */
     private Boolean isCompleted;
 
     private Integer checkDate;
 
     private Integer payNo;
+    
+    private Double medicineMoney;
 
     private static final long serialVersionUID = 1L;
 
@@ -91,8 +95,27 @@ public class GMedicineAllocation implements Serializable {
     public void setPayNo(Integer payNo) {
         this.payNo = payNo;
     }
+    
 
-    @Override
+    public String getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(String doctor) {
+		this.doctor = doctor;
+	}
+	
+	
+
+	public Double getMedicineMoney() {
+		return medicineMoney;
+	}
+
+	public void setMedicineMoney(Double medicineMoney) {
+		this.medicineMoney = medicineMoney;
+	}
+
+	@Override
     public boolean equals(Object that) {
         if (this == that) {
             return true;

@@ -4,12 +4,14 @@
   <resultMap id="BaseResultMap" type="cn.edu.wj.model.GMedicineAllocation">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
     <result column="medicine_id" jdbcType="INTEGER" property="medicineId" />
     <result column="medicine_num" jdbcType="INTEGER" property="medicineNum" />
     <result column="medicine_doctor" jdbcType="VARCHAR" property="medicineDoctor" />
     <result column="is_completed" jdbcType="BIT" property="isCompleted" />
     <result column="check_date" jdbcType="INTEGER" property="checkDate" />
     <result column="pay_no" jdbcType="INTEGER" property="payNo" />
+    <result column="medicine_money" jdbcType="DOUBLE" property="payNo" />
   </resultMap>
   <sql id="Base_Column_List">
     id, patient_id, medicine_id, medicine_num, medicine_doctor, is_completed, check_date, 
@@ -152,6 +154,7 @@
 	SELECT 
 	<include refid="Base_Column_List" />
 	FROM g_medicine_allocation
+	where is_completed = #{i,jdbcType=INTEGER}
 	limit #{m},#{n}
 	</select>
   <update id="finishMedicine" parameterType="cn.edu.wj.model.GMedicineAllocation">
@@ -161,4 +164,10 @@
       check_date = #{checkDate,jdbcType=INTEGER}
     where pay_no = #{payNo,jdbcType=INTEGER}
   </update>
+  <insert id="insertSQL" parameterType="cn.edu.wj.model.GMedicineAllocation"  >
+      insert into g_medicine_allocation (patient_id, doctor, medicine_id, medicine_num, is_completed, pay_no, medicine_money)
+    values (#{patientId,jdbcType=INTEGER}, #{doctor,jdbcType=VARCHAR}, #{medicineId,jdbcType=INTEGER}, 
+      #{medicineNum,jdbcType=INTEGER}, #{isCompleted,jdbcType=BIT}, #{payNo,jdbcType=INTEGER}, #{medicineMoney,jdbcType=DOUBLE})
+       
+  </insert>
 </mapper>

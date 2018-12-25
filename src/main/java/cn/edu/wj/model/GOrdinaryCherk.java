@@ -19,7 +19,7 @@ public class GOrdinaryCherk implements Serializable {
 
     /**
 
-     * 1£ºÊÇ£º0£º²»ÊÇ
+     * 1ï¿½ï¿½ï¿½Ç£ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
      */
     private Boolean isCompleted;
@@ -27,8 +27,18 @@ public class GOrdinaryCherk implements Serializable {
     private Integer checkDate;
 
     private Integer payNo;
+    
+    private Integer checkMoney;
 
-    private static final long serialVersionUID = 1L;
+    public Integer getCheckMoney() {
+		return checkMoney;
+	}
+
+	public void setCheckMoney(Integer checkMoney) {
+		this.checkMoney = checkMoney;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

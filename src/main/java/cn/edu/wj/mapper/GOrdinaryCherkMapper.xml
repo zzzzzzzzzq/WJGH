@@ -30,10 +30,10 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into g_ordinary_cherk (patient_id, check_item, check_result, 
-      check_doctor, is_completed, check_date, 
+      check_doctor,  check_date, 
       pay_no)
     values (#{patientId,jdbcType=INTEGER}, #{checkItem,jdbcType=VARCHAR}, #{checkResult,jdbcType=VARCHAR}, 
-      #{checkDoctor,jdbcType=VARCHAR}, #{isCompleted,jdbcType=BIT}, #{checkDate,jdbcType=INTEGER}, 
+      #{checkDoctor,jdbcType=VARCHAR},  #{checkDate,jdbcType=INTEGER}, 
       #{payNo,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.edu.wj.model.GOrdinaryCherk">

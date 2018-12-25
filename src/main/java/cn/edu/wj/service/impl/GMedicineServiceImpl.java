@@ -58,7 +58,7 @@ public class GMedicineServiceImpl implements GMedicineService{
 		int n=limit;
 		int ifFinish = 0;
 		List<GMedicineAllocation> list =GMedicineAllocationMapper.findUnfinishMedicine(ifFinish);
-		List<GMedicineAllocation> list2 =GMedicineAllocationMapper.selectAllocation(m,n);
+		List<GMedicineAllocation> list2 =GMedicineAllocationMapper.selectAllocation(m,n,ifFinish);
 		int count=list.size();
 		int count2=list2.size();
 		System.out.println(count2+"!!");
@@ -101,6 +101,12 @@ public class GMedicineServiceImpl implements GMedicineService{
 		System.out.println(list);
 		System.out.println(count);
 		return UIUtils.getGridData(count, list2);
+	}
+
+	@Override
+	public int insert(GMedicineAllocation gma) {
+		// TODO Auto-generated method stub
+		return GMedicineAllocationMapper.insertSQL(gma);
 	}
 	
 }

@@ -21,11 +21,8 @@
   		width: 100%;
   	}
   	.left th,.left td{
-  		width: 25%;
+  		width: 20%;
   		text-align: center;
-  	}
-  	.shangchuan{
-  		margin-left: 250px;
   	}
   	.re{
   		display: none;
@@ -34,27 +31,18 @@
 	</head>
 	<body>
 		<div class="left">
-			<form>
 			 <table lay-filter="parse-table-demo" id="medlist">
-			 <!--  <thead> -->
+
 			    <tr>
+			      <th lay-data="{field:'id'}">ID</th>
 			      <th lay-data="{field:'username'}">药品名</th>
 			      <th lay-data="{field:'num'}">数量</th>
 			      <th lay-data="{field:'price'}">单价</th>
 			      <th lay-data="{field:'option'}">操作</th>
 			    </tr> 
-			 <!--  </thead>
-			  <tbody >
-			  		<tr style="display:none">
-			  			<td></td>
-			  			<td></td>
-			  			<td></td>
-			  			<td></td>
-			  		</tr>
-			  </tbody>  -->
+
 			</table>
-			<button class="layui-btn" lay-submit="" lay-filter="demo1">上传配药</button>
-			</form>
+			<a href="javascript:void(0);" onclick="sub()">提交</a>
 		</div>
 		<div class="right">
 			<div class="demoTable">
@@ -62,16 +50,52 @@
 			  <div class="layui-inline">
 			    <input class="layui-input" name="id" id="demoReload" autocomplete="off"/>
 			  </div>
-			  <button class="layui-btn shangchuan" data-type="reload">搜索</button>
+			  <button class="layui-btn" data-type="reload">搜索</button>
 			<table id="demo" lay-filter="test"></table>
-			
 		</div>
 		
 	
 	<script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs" lay-event="add">添加</a>
 </script>
-	
+	<script type="text/javascript">
+		function sub(){
+			var jsonArr=[]
+			$('#medlist tr').each(function(i){
+				var json={}
+				if(i!=0){
+					var id = $(this).find('td:eq(0) input').val();
+					var name = $(this).find('td:eq(1) input').val();//取表格的第i行第四列的input标签的值 
+					var num = $(this).find('td:eq(2) input').val();//取表格的第i行第四列的input标签的值
+					var price = $(this).find('td:eq(3) input').val();//取表格的第i行第四列的input标签的值
+					/* console.log(name+" "+num+" "+price) */
+					json["id"]=id
+					json["name"]=name
+					json["num"]=num
+					json["price"]=price
+					jsonArr.push(json)
+					console.log(json)
+				}
+			});
+			
+			console.log(jsonArr)
+			/* var data = {}
+			data["jsonArr"] = jsonArr */
+			/* console.log(data) */
+			$.ajax({
+					type:'post',
+					url:'sub',
+					contentType : "application/json" ,
+					data:JSON.stringify(jsonArr),
+					async: false,
+					success:function (data) {
+						
+						window.location.href="start_visit?patientcardId=20180001"
+						
+					}
+				})
+		}
+	</script>
 	<script>
 		layui.use('table', function(){
 		  var table = layui.table;
@@ -149,14 +173,14 @@
     var data = obj.data;
     console.log(data)
     if(obj.event === 'add'){
-      
- 
+
       var a = document.getElementById("medlist")
       console.log(a)
       var addd = '<tr>'+
-              		'<td class="med_name">'+data.name+'</td>'+
+      				'<td class="med_name">'+data.id+'<input type="text" value="'+data.id+'" style="display:none;"/></td>'+
+              		'<td class="med_name">'+data.name+'<input type="text" value="'+data.name+'" style="display:none;"/></td>'+
               		'<td class="med_num"><input type="text" value="1" style="width:100px;"/></td>'+
-              		'<td class="med_price">'+data.price+'</td>'+
+              		'<td class="med_price">'+data.price+'<input type="text" value="'+data.price+'" style="display:none;"/></td>'+
               		'<td><a class="layui-btn layui-btn-danger layui-btn-xs del" href="javascript:void(0);" onclick="del(this)">删除</a></td>'+
               	'</tr>'
       $("#medlist").append(addd)

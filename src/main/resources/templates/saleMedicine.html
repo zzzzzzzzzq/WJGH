@@ -32,13 +32,12 @@
 		    ,limit:10
 		    ,request: {pageName: 'page' ,limitName: 'limit' } 
 		    ,cols: [[
-		   	 {type:'checkbox'}
-		   	  ,{field:'id', width:50, title: 'ID'}
+		   	  {field:'id', width:50, title: 'ID'}
 		      ,{field:'patient_id', width:100, title: '病人ID'}
 		      ,{field:'medicine_id', width:150, title: '药品ID'}
 		      ,{field:'medicine_num', width:100, title: '数量'}
-		      ,{field:'edicine_doctor', width:100, title: '配药医生'}
-		      ,{field:'isCompleted', width:100, title: '是否完成配药'}
+		      ,{field:'medicine_doctor', width:100, title: '配药医生'}
+		      ,{field:'is_completed', width:100, title: '是否完成配药'}
 		      ,{field:'check_date', width:100, title: '配药时间'}
 		      ,{field:'pay_no', width:100, title: '收费单号'}
 		      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
@@ -136,7 +135,7 @@
 		$("#addmdoctor").on('click',function(){
 /* alert("123"); */
   	layer.open({
-  title: '增加药品',
+  title: '确认配药',
   type:2,
   area:['280px','400px'],
   content: "/addmdoctorform"

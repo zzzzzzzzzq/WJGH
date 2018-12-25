@@ -17,6 +17,8 @@
 		        </div>
 		    </div>
 		    <button class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+		    <a id="aaa" class="layui-btn layui-btn-danger">完成收费</a>
+		    
 		</form>
 		<table class="layui-table" lay-data="{url:'/paylist?payNo='+document.getElementById('payNo').value, id:'test3'}" lay-filter="test3">
 		  <thead>
@@ -30,17 +32,14 @@
 		      <th lay-data="{field:'pay_way', edit: 'text', minWidth: 100}">支付方式</th>
 		      <th lay-data="{field:'pay_time', sort: true, edit: 'text'}">支付时间</th>
 		      <th lay-data="{field:'is_pay', sort: true, edit: 'text'}">支付状态</th>
-		      <th lay-data="{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}">操作</th>
+		      
 		    </tr>
 		  </thead>
 		</table>
 		
 		<script src="js/jquery.js"></script>
     	<script src="layui/layui.js" charset="utf-8"></script>
-      <script type="text/html" id="barDemo">
-  		<a class="aaa layui-btn layui-btn-danger layui-btn-xs" lay-event="del">完成收费</a>
-	  </script>        
-          
+
 
 <script>
 layui.use('table', function(){
@@ -99,7 +98,7 @@ layui.use('table', function(){
 	  vid2=obj.data.pay_no;
 	  
 	});
-	$(".aaa").on("click", function(){
+	$("#aaa").on("click", function(){
 		if(vid==null){
 			layer.msg("请选择一条数据在操作！")
 		}else{

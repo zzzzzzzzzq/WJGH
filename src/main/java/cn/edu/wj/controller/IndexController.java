@@ -19,7 +19,11 @@ import cn.edu.wj.service.GAdminService;
 import cn.edu.wj.service.GPatientService;
 import cn.edu.wj.service.RoleService;
 import cn.edu.wj.service.GNodeService;
-
+/**
+ * 
+ * @author 14517
+ *主页
+ */
 @Controller
 public class IndexController {
 	@Autowired
@@ -36,6 +40,13 @@ public class IndexController {
         return "/login";
     }
 	
+	/**
+	 * 验证登陆
+	 * @param m
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/loginCheck",method = {RequestMethod.POST})
     public String login(Model m,HttpServletRequest request) throws Exception{ 
 		String loginName = request.getParameter("loginName");
@@ -53,9 +64,9 @@ public class IndexController {
 			return "/login";
 		}
 		boolean status = reqService.ifDisable(loginName);
-		System.out.println("用户状态为"+status);//false为未禁用，true为用户已禁用
+		System.out.println("用户状态为"+status);
 		if(status == true){
-		m.addAttribute("flag",3);//flag为3为用户状态异常
+		m.addAttribute("flag",3);
 		return "/login";
 		}
 		int userId = reqService.findId(loginName);//获取UserID
@@ -69,20 +80,29 @@ public class IndexController {
 		return "/main";
 		
     }
+	
+	/**
+	 * 医生登陆
+	 * @param m Model
+	 * @param request http请求
+	 * @return 登陆成功返回主页面
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/patientLogin",method = {RequestMethod.POST})
-	public String Patlogin(Model m,HttpServletRequest request) throws Exception{ 
-		String patientIden = request.getParameter("loginIden");//身份证号
+	public String patlogin(Model m,HttpServletRequest request) throws Exception{ 
+		String patientIden = request.getParameter("loginIden");
 		System.out.println(patientIden);
 		List<GPatientInfo> GPatientInfo = gPatientService.patientLogin(patientIden);
 		System.out.println("返回结果为"+GPatientInfo);
 		if(GPatientInfo.isEmpty()){
-			m.addAttribute("flag",3);//flag为3为用户状态异常
+			m.addAttribute("flag",3);
 			return "/login";
 		}
 		int roleId = 6;
 		m.addAttribute("leftMenuList",gNodeService.getLeftNodeList(roleId));
 		return "/main";
     }
+	
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request,
 			HttpServletResponse response,HttpSession session)throws Exception{

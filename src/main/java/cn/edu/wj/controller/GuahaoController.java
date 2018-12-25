@@ -19,7 +19,7 @@ import cn.edu.wj.model.GPayRecord;
 import cn.edu.wj.service.GPatientRegistrationService;
 import cn.edu.wj.service.GPayRecordService;
 /**
- * 张浙权傻狗
+ * lyr傻狗
  * @author lowke
  *
  */
@@ -32,17 +32,17 @@ public class GuahaoController {
 	
 	
 	@RequestMapping("/registration")
-    public String Registration() throws Exception{ 
+    public String registration() throws Exception{ 
         return "/registration";
     }
 	
 	@RequestMapping("/choice_doctor")
-    public String ChoiceDoctor() throws Exception{ 
+    public String choiceDoctor() throws Exception{ 
         return "/choice_doctor";
     }
 	
 	@RequestMapping("/registration_fee")
-    public String RegistrationFee(HttpServletRequest request, HttpServletResponse response, Model m) throws Exception{ 
+    public String registrationFee(HttpServletRequest request, HttpServletResponse response, Model m) throws Exception{ 
 		List<String> strs = new ArrayList<String>();
 		String doctorName = request.getParameter("doctorName");
 		String department = request.getParameter("department");
@@ -60,7 +60,7 @@ public class GuahaoController {
     }
 	
 	@RequestMapping("/real_registration")
-    public String RealRegistration(HttpServletRequest request, Model m) throws Exception{ 
+    public String realRegistration(HttpServletRequest request, Model m) throws Exception{ 
 		System.out.println("hhhh");
 		String patientIdentityid = "330102199003075670";
 		
